@@ -1,13 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
 <head>
   <meta charset="UTF-8">
   <title>Locat' Me</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
   <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.css' rel='stylesheet' />
+  <link href='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.css' rel='stylesheet' />
+<style>
+    #fit {
+        display: block;
+        position: relative;
+        margin: 0px auto;
+        width: 50%;
+        height: 40px;
+        padding: 10px;
+        border: none;
+        border-radius: 3px;
+        font-size: 12px;
+        text-align: center;
+        color: #fff;
+        background: #ee8a65;
+    }
+</style>
+
 
   <style type="text/css">
     html, body {
@@ -24,12 +43,57 @@
 </head>
 <body>
   <div id="map"></div>
-
+  <button onclick="getLocation()" id='fit' >Send Location</button>
   <script src="https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js"></script>
   <script src="https://cdn.firebase.com/js/client/2.2.3/firebase.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.7.0/lodash.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+
+<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAI4vwpS8NGVIZcDeiZtY0ZHsZdRE-mhLs",
+    authDomain: "real-time-tracking-bcce8.firebaseapp.com",
+    databaseURL: "https://real-time-tracking-bcce8.firebaseio.com",
+    projectId: "real-time-tracking-bcce8",
+    storageBucket: "real-time-tracking-bcce8.appspot.com",
+    messagingSenderId: "906782233166"
+  };
+  firebase.initializeApp(config);
+</script>
+  
+  <script>
+
+  // store current location with information regarding disaster into firebase
+    function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+         window.alert("Geolocation is not supported by this browser.");
+    }
+  }
+
+    function showPosition(position){
+      
+      lat = position.coords.latitude;
+      lon = position.coords.longitude;
+
+      var database = firebase.database();
+
+      var ref = database.ref('location');
+
+      var data = {
+        latitude: lat,
+        longitude: lon
+      }
+      ref.push(data);
+    }
+
+  </script>
 
   <script src="config.dist.js"></script>
   <script src="app.js"></script>
+
 </body>
 </html>

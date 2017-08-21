@@ -49,12 +49,56 @@ var mapZooming = false;
 L.mapbox.accessToken = config.mapbox.accessToken;
 
 map = L.mapbox.map('map', config.mapbox.mapId, {
-  zoomControl: false,
+
+  zoomControl: true,
   attributionControl: false,
-  tileLayer: {
+  tileLayer: {  
     maxNativeZoom: 19
   }
 }).setView([48.861920, 2.341755], 18)
+
+//add stored location marker to mapbox - edited
+
+var database = firebase.database();
+var ref = database.ref('location');
+ref.on('value', gotData);
+
+function gotData(data){
+  //console.log(data.val());
+  var location = data.val();
+  var keys = Object.keys(location);
+
+  for(var i=0;i<keys.length;i++){
+    var k = keys[i];
+    var latitude = location[k].latitude;
+    var longitude = location[k].longitude;
+    console.log(latitude,longitude);
+
+    var geojson = [
+    {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [longitude, latitude]
+    },
+    properties: {
+      title: 'Mapbox DC',
+      description: '1714 14th St NW, Washington DC',
+      'marker-color': '#3bb2d0',
+      'marker-size': 'large',
+      'marker-symbol': 'rocket'
+    }
+  }
+];
+
+var myLayer = L.mapbox.featureLayer().setGeoJSON(geojson).addTo(map);
+map.scrollWheelZoom.enable();
+  }
+}
+
+
+//add stored location marker to mapbox - edited
+
 
 // map.on('ready', function() { console.log('map.ready') });
 
@@ -128,6 +172,8 @@ function addPoint(uuid, point) {
   map.fitBounds(Object.keys(markers).map(function(uuid) {
     return markers[uuid].getLatLng()
   }))
+
+
 }
 
 function removePoint(uuid) {
@@ -212,6 +258,7 @@ function pushCurrentStatus() {
     orientation: currentOrientation,
     timestamp: now()
   })
+
 }
 pushCurrentStatus = _.throttle(pushCurrentStatus, 50)
 
@@ -294,3 +341,4 @@ setInterval(function() {
 }, 5000);
 
 })();
+
