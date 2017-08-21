@@ -96,7 +96,6 @@ map.scrollWheelZoom.enable();
   }
 }
 
-
 //add stored location marker to mapbox - edited
 
 
@@ -214,7 +213,7 @@ function putPoint(uuid, point) {
 //
 var endpoint;
 
-endpoint = new Firebase('https://' + config.firebase + '.firebaseio.com/maps/' + mapId);
+endpoint = new Firebase('https://' + config.firebase + '.firebaseio.com/maps/' + 'apps');
 
 endpoint.on('child_added', function(childSnapshot) {
   var uuid = childSnapshot.key()
