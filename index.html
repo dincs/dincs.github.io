@@ -5,11 +5,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Real-Time Tracking</title>
-
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <script src='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.js'></script>
-  <link href='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.css' rel='stylesheet' />
+<!-- style for button display on map -->
+
 <style>
     #fit {
         display: block;
@@ -27,6 +26,16 @@
     }
 </style>
 
+<!-- style for button display on map -->
+
+  <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
+  <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
+  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+  <script src="https://cdn.firebase.com/js/client/2.2.3/firebase.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.7.0/lodash.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+  <link href="elements.css" rel="stylesheet">
+  <script src="my_js.js"></script>
 
   <style type="text/css">
     html, body {
@@ -40,59 +49,48 @@
       width: 100%;
     }
   </style>
+
 </head>
-<body>
+
+
   <div id="map"></div>
-  <button onclick="getLocation()" id='fit' >Send Location</button>
-  <script src="https://cdn.firebase.com/js/client/2.2.3/firebase.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.7.0/lodash.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
 
-<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyAI4vwpS8NGVIZcDeiZtY0ZHsZdRE-mhLs",
-    authDomain: "real-time-tracking-bcce8.firebaseapp.com",
-    databaseURL: "https://real-time-tracking-bcce8.firebaseio.com",
-    projectId: "real-time-tracking-bcce8",
-    storageBucket: "real-time-tracking-bcce8.appspot.com",
-    messagingSenderId: "906782233166"
-  };
-  firebase.initializeApp(config);
-</script>
+  <body id="body" style="overflow:hidden;">
+
+  <div id="abc" name="abc">
+  <!-- Popup Div Starts Here -->
+  <div id="popupContact">
+  <!-- Contact Us Form -->
+  <form action="#" id="form" method="post" name="form">
+  <img id="close" src="close.png" onclick ="div_hide()">
+  <h4>Select Image that describe your situation</h4>
+  <hr>
+
   
-  <script>
+<label>
+  <input type="radio" name="disaster"  value="flood"/>
+  <img src="flood.png"/>
+</label>
 
-  // store current location with information regarding disaster into firebase
-    function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else { 
-         window.alert("Geolocation is not supported by this browser.");
-    }
-  }
 
-    function showPosition(position){
-      
-      lat = position.coords.latitude;
-      lon = position.coords.longitude;
+<label>
+  <input type="radio" name="disaster"   value="fire"/>
+  <img src="fire.png" />
+</label>
 
-      var database = firebase.database();
 
-      var ref = database.ref('location');
+  <a href="javascript:%20check_empty()" id="submit">Send</a>
+  </form>
+  </div>
+  <!-- Popup Div Ends Here -->
+  </div>
+  <!-- Display Popup Button -->
+  <button id="fit" onclick="div_show()">Send Location!</button>
 
-      var data = {
-        latitude: lat,
-        longitude: lon
-      }
-      ref.push(data);
-    }
-
-  </script>
+  </body>
 
   <script src="config.dist.js"></script>
   <script src="app.js"></script>
 
-</body>
+
 </html>

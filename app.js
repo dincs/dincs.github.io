@@ -72,28 +72,44 @@ function gotData(data){
     var k = keys[i];
     var latitude = location[k].latitude;
     var longitude = location[k].longitude;
-    console.log(latitude,longitude);
+    var typeDisaster = location[k].typeDisaster;
+    //console.log(latitude,longitude);
 
-    var geojson = [
-    {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [longitude, latitude]
+    var geoJson = {
+    type: 'FeatureCollection',
+    features:[{
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [longitude, latitude]
     },
-    properties: {
-      title: 'Mapbox DC',
-      description: '1714 14th St NW, Washington DC',
-      'marker-color': '#3bb2d0',
-      'marker-size': 'large',
-      'marker-symbol': 'rocket'
+    "properties": {
+      "title": typeDisaster,
+      "description": 'Warning! ' + typeDisaster + '!',
+      "icon": {
+              "iconUrl": typeDisaster + ".png",
+              "iconSize": [25, 25], // size of the icon
+              "iconAnchor": [25, 25], // point of the icon which will correspond to marker's location
+              "popupAnchor": [0, -25], // point from which the popup should open relative to the iconAnchor
+              "className": "dot"
+          }
     }
-  }
-];
+  }]
+};
 
-var myLayer = L.mapbox.featureLayer().setGeoJSON(geojson).addTo(map);
+var myLayer = L.mapbox.featureLayer().addTo(map);
 map.scrollWheelZoom.enable();
-  }
+
+myLayer.on('layeradd', function(e) {
+    var marker = e.layer,
+        feature = marker.feature;
+
+    marker.setIcon(L.icon(feature.properties.icon));
+});
+
+myLayer.setGeoJSON(geoJson);
+
+}
 }
 
 //add stored location marker to mapbox - edited
