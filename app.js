@@ -55,7 +55,7 @@ map = L.mapbox.map('map', config.mapbox.mapId, {
   tileLayer: {  
     maxNativeZoom: 19
   }
-}).setView([48.861920, 2.341755], 18)
+}).setView([3.0675797, 101.4987673], 17)
 
 //add stored location marker to mapbox - edited
 
@@ -63,10 +63,17 @@ var database = firebase.database();
 var ref = database.ref('location');
 ref.on('value', gotData);
 
+
+
 function gotData(data){
   //console.log(data.val());
   var location = data.val();
   var keys = Object.keys(location);
+
+  
+    // The clusterGroup gets each marker in the group added to it
+    // once loaded, and then is added to the map
+  var markers = new L.MarkerClusterGroup();
 
   for(var i=0;i<keys.length;i++){
     var k = keys[i];
@@ -96,10 +103,7 @@ function gotData(data){
     }
   }]
 };
-
-var myLayer = L.mapbox.featureLayer().addTo(map);
-map.scrollWheelZoom.enable();
-
+var myLayer = L.mapbox.featureLayer();
 myLayer.on('layeradd', function(e) {
     var marker = e.layer,
         feature = marker.feature;
@@ -109,7 +113,11 @@ myLayer.on('layeradd', function(e) {
 
 myLayer.setGeoJSON(geoJson);
 
+
+markers.addLayer(myLayer);
+map.addLayer(markers);
 }
+
 }
 
 //add stored location marker to mapbox - edited
