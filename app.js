@@ -46,16 +46,21 @@ var map;
 var markers = {};
 var mapZooming = false;
 
+
 L.mapbox.accessToken = config.mapbox.accessToken;
 
 map = L.mapbox.map('map', config.mapbox.mapId, {
 
   zoomControl: true,
   attributionControl: false,
+  trackUserLocation: true,
+  positionOptions: {
+        enableHighAccuracy: true
+    },
   tileLayer: {  
     maxNativeZoom: 19
   }
-}).setView([3.0675797, 101.4987673], 17)
+}).setView([3.0675797, 101.4987673], 17) 
 
 //add stored location marker to mapbox - edited
 
