@@ -52,8 +52,9 @@ L.mapbox.accessToken = config.mapbox.accessToken;
 map = L.mapbox.map('map', config.mapbox.mapId, {
 
   zoomControl: true,
-  attributionControl: false,
   trackUserLocation: true,
+  attributionControl: false,
+  
   positionOptions: {
         enableHighAccuracy: true
     },
@@ -61,6 +62,7 @@ map = L.mapbox.map('map', config.mapbox.mapId, {
     maxNativeZoom: 19
   }
 }).setView([3.0675797, 101.4987673], 17) 
+
 
 //add stored location marker to mapbox - edited
 
@@ -85,7 +87,7 @@ function gotData(data){
     var latitude = location[k].latitude;
     var longitude = location[k].longitude;
     var typeDisaster = location[k].typeDisaster;
-    //console.log(latitude,longitude);
+    console.log(k);
 
     var geoJson = {
     type: 'FeatureCollection',
@@ -97,7 +99,18 @@ function gotData(data){
     },
     "properties": {
       "title": typeDisaster,
-      "description": 'Warning! ' + typeDisaster + '!',
+      "description": 
+
+      'Warning!!!!!!!!!!!!! <br>' +
+      '<table>' +
+      '<tr>' +
+      '<td><button style="height: 1em; width: 10">+</button></td>' +
+      '<td><button style="height: 1em; width: 10">-</button></td>' +
+      '</tr>' +
+      '</table>'
+
+
+      ,
       "icon": {
               "iconUrl": typeDisaster + ".png",
               "iconSize": [25, 25], // size of the icon

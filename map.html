@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="UTF-8">
+  <title>Real-Time Tracking</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- style for button display on map -->
+
+<style>
+    #fit {
+        display: block;
+        position: relative;
+        margin: 0px auto;
+        width: 50%;
+        height: 40px;
+        padding: 10px;
+        border: none;
+        border-radius: 3px;
+        font-size: 12px;
+        text-align: center;
+        color: #fff;
+        background: #ee8a65;
+    }
+</style>
+
+<!-- style for button display on map -->
+
+  <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
+  <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
+  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+  <script src="https://cdn.firebase.com/js/client/2.2.3/firebase.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.7.0/lodash.min.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAscDnI8T-rdkJzht6UflyG6czMX83B01s&callback=initMap"
+  type="text/javascript"></script>
+  <link href="elements.css" rel="stylesheet">
+  <script src="my_js.js"></script>
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/leaflet.markercluster.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.css' rel='stylesheet' />
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.Default.css' rel='stylesheet' />
+
+  <style type="text/css">
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+
+</head>
+
+
+  <div id="map"></div>
+
+  <body id="body" style="overflow:hidden;">
+
+  <div id="abc" name="abc"> 
+  <!-- Popup Div Starts Here -->
+  <div id="popupContact">
+  <!-- Contact Us Form -->
+  <form action="#" id="form" method="post" name="form">
+  <img id="close" src="close.png" onclick ="div_hide()">
+  <h4>Select Image that describe your situation</h4>
+  <hr>
+
+  
+<label>
+  <input type="radio" name="disaster"  value="flood"/>
+  <img src="flood.png"/>
+</label>
+
+
+<label>
+  <input type="radio" name="disaster"   value="fire"/>
+  <img src="fire.png" />
+</label>
+
+
+  <a href="javascript:%20check_empty()" id="submit">Send</a>
+  </form>
+  </div>
+  <!-- Popup Div Ends Here -->
+  </div>
+  <!-- Display Popup Button -->
+  <button id="fit" onclick="div_show()">Send Location!</button>
+
+  </body>
+
+  <script src="config.dist.js"></script>
+  <script src="app.js"></script>
+
+
+</html>
