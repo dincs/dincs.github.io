@@ -167,6 +167,7 @@ ul.CTAs a {
     width: 100%;
     min-height: 10vh;
     transition: all 0.3s;
+    padding: 10px;
     position: absolute;
     top: 0;
     right: 0;
