@@ -169,9 +169,9 @@ ul.CTAs a {
 ----------------------------------------------------- */
 #content {
     width: 100%;
-    padding: 0px;
-    min-height: 10vh;
+    min-height: 100vh;
     transition: all 0.3s;
+    padding: 0px;
     position: absolute;
     top: 0;
     right: 0;
