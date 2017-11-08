@@ -66,17 +66,17 @@ map = L.mapbox.map('map', config.mapbox.mapId, {
 
 //add stored location marker to mapbox - edited
 
-var database = firebase.database();
+/*var database = firebase.database();
 var ref = database.ref('location');
 ref.on('value', gotData);
 
 
 
 function gotData(data){
-  //console.log(data.val());
-  var location = data.val();
-  var keys = Object.keys(location);
 
+  var location = data.val();
+  
+  var keys = Object.keys(location);
   
     // The clusterGroup gets each marker in the group added to it
     // once loaded, and then is added to the map
@@ -84,10 +84,13 @@ function gotData(data){
 
   for(var i=0;i<keys.length;i++){
     var k = keys[i];
+    var user = location[k].user;
+    //console.log(user);
     var latitude = location[k].latitude;
     var longitude = location[k].longitude;
     var typeDisaster = location[k].typeDisaster;
-    console.log(k);
+    var date = location[k].date;
+    var info = location[k].information;
 
     var geoJson = {
     type: 'FeatureCollection',
@@ -96,21 +99,17 @@ function gotData(data){
     "geometry": {
       "type": "Point",
       "coordinates": [longitude, latitude]
-    },
+    },  
     "properties": {
       "title": typeDisaster,
       "description": 
-
-      'Warning!!!!!!!!!!!!! <br>' +
-      '<table>' +
-      '<tr>' +
-      '<td><button style="height: 1em; width: 10">+</button></td>' +
-      '<td><button style="height: 1em; width: 10">-</button></td>' +
-      '</tr>' +
-      '</table>'
-
-
+      '#' + i + '<br>' +
+      'Information: ' + info + '<br>' +
+      'Date: ' + date + '<br>' +
+      '<button class="like" value='+ k + '>Like</button>' +
+      '<button class="dislike" value='+ k + '>Dislike</button>' 
       ,
+      image: 'flood.png',
       "icon": {
               "iconUrl": typeDisaster + ".png",
               "iconSize": [25, 25], // size of the icon
@@ -127,6 +126,8 @@ myLayer.on('layeradd', function(e) {
         feature = marker.feature;
 
     marker.setIcon(L.icon(feature.properties.icon));
+     var content = '<p><strong>' + feature.properties.title + '</strong><br>'+feature.properties.description +'</p><img src="' + feature.properties.image + '" height=50 width=60>';
+  marker.bindPopup(content);
 });
 
 myLayer.setGeoJSON(geoJson);
@@ -135,10 +136,31 @@ myLayer.setGeoJSON(geoJson);
 markers.addLayer(myLayer);
 map.addLayer(markers);
 }
-
-}
-
+}*/
 //add stored location marker to mapbox - edited
+//function like and dislike
+$('#map').on('click', '.like', function() {
+    
+    var clicked = $(this).val();
+    
+      var database = firebase.database();
+
+      var ref = database.ref('location/'+ clicked + '/' + myUuid);
+      
+      ref.update ({
+        like: true,
+        dislike: false
+      });
+  
+
+});
+
+$('#map').on('click', '.dislike', function() {
+    var clicked = $(this).val();
+    alert(myUuid + " " + clicked);
+});
+
+//function like and dislike
 
 
 // map.on('ready', function() { console.log('map.ready') });
@@ -369,7 +391,7 @@ setInterval(function() {
     snap.forEach(function(childSnapshot) {
       var uuid = childSnapshot.key()
       var point = childSnapshot.val()
-
+      //console.log(childSnapshot.val());
       if (uuid === myUuid) return
 
       if (childSnapshot.val().timestamp < now - 60 * 30) {

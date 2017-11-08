@@ -104,6 +104,10 @@ a, a:hover, a:focus {
     border-bottom: 1px solid #47748b;
 }
 
+#sidebar ul.hide {
+    padding: 20px 0;
+    border-bottom: 1px solid #47748b;
+}
 #sidebar ul p {
     color: #fff;
     padding: 10px;

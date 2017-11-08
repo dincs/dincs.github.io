@@ -8,15 +8,17 @@ var config = {
     messagingSenderId: "906782233166"
   };
   firebase.initializeApp(config);
-
+var myUuid = localStorage.getItem('myUuid');
 // Validating Empty Field
 function check_empty() 
 {
+  var info = document.forms["form"]["info"].value;
+  var disaster = document.forms["form"]["disaster"].value;
 
-	if (document.getElementsByName("disaster").value == "") {
-alert("Please Select An Image !");
-
-} 
+	if (disaster==""||info=="") {
+  alert("ERROR! Please send again!");
+  return false;
+}
 
 else {
 var test = document.getElementsByName("disaster");
@@ -26,8 +28,8 @@ for (var i = 0, length = test.length; i < length; i++) {
             break;
         }
     }
-document.getElementById('form').submit();
-alert("Form Submitted Successfully...");
+//document.getElementById('form').submit();
+alert("Information has been sent...Thank you!!");
 
 if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
@@ -40,6 +42,8 @@ if (navigator.geolocation) {
       
       lat = position.coords.latitude;
       lon = position.coords.longitude;
+      var dt = new Date();
+      var utcDate = dt.toUTCString();
 
       var database = firebase.database();
 
@@ -48,7 +52,10 @@ if (navigator.geolocation) {
       var data = {
         latitude: lat,
         longitude: lon,
-        typeDisaster: type
+        typeDisaster: type,
+        uuid: myUuid,
+        information: info,
+        date: utcDate
       }
       ref.push(data);
     }
