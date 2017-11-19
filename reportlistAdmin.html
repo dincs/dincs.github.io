@@ -2,9 +2,17 @@
 <title>Report List</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 <head>
-	<script src="https://www.gstatic.com/firebasejs/4.5.1/firebase.js"></script>
+  <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.5.1/firebase.js"></script>
   <script src="js/my_js.js"></script>
-	<script>
+  <script>
+$(document).ready(function(){
+    $('#submit1').click(function(){
+        alert("JQuery Running!");
+    });
+});
+
 var database = firebase.database();
 var ref = database.ref('location');
 ref.on('value', gotData);
@@ -25,13 +33,21 @@ function gotData(data){
     document.write("<td><img  src=img/"+ typeDisaster + ".png height=42 width=42/></td>");
     document.write("<td>Latitude: "+ latitude);
     document.write("<td>Longitude: "+ longitude);
+    document.write('<td><button id="submit1" >Delete</button>');
     document.write("</tr>");
-    document.write("<table/>");
+    document.write("</table>");
     document.write("<br><br>");
+    
+}
+}
 
-}
-}
-	</script>
+/*$('#del').on('click', '.delete', function() {
+    
+    var clicked = $(this).val();
+    console.log(clicked);
+});*/
+  </script>
+
 </head>
 <body>
 </body>

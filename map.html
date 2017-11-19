@@ -1,12 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link href="css/elements.css" rel="stylesheet">
 
+<script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.7.0/lodash.min.js"></script>
+ <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAscDnI8T-rdkJzht6UflyG6czMX83B01s&callback=initMap"
+  type="text/javascript"></script>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Real-Time Tracking</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+<script src="js/my_js.js"></script>
+<script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
+<script src="https://cdn.firebase.com/js/client/2.2.3/firebase.js"></script>
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.min.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.mapbox.css' rel='stylesheet' />
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/css/font-awesome.min.css' rel='stylesheet' />
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/leaflet.markercluster.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.css' rel='stylesheet' />
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.Default.css' rel='stylesheet' />
 <!-- style for button display on map -->
 
 <style>
@@ -27,24 +37,8 @@
 </style>
 
 <!-- style for button display on map -->
-<script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
-  <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
-  <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
-  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
-  <script src="https://cdn.firebase.com/js/client/2.2.3/firebase.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.7.0/lodash.min.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAscDnI8T-rdkJzht6UflyG6czMX83B01s&callback=initMap"
-  type="text/javascript"></script>
-  <link href="elements.css" rel="stylesheet">
 
-  <script src="my_js.js"></script>
-  <script src="vote.js"></script>
-
-<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/leaflet.markercluster.js'></script>
-<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.css' rel='stylesheet' />
-<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.Default.css' rel='stylesheet' />
-
-  <style type="text/css">
+ <style type="text/css">
     html, body {
       margin: 0;
       padding: 0;
@@ -57,38 +51,67 @@
     }
   </style>
 
-</head>
+<style>
+.legend label,
+.legend span {
+  display:block;
+  float:left;
+  height:15px;
+  width:20%;
+  text-align:center;
+  font-size:9px;
+  color:#808080;
+  }
+</style>
 
+<!-- Set the display of this container to none so we can
+     add it programmatically to `legendControl` -->
+<div id='legend' style='display:none;'>
+  <strong>The Title or Explanation of your Map</strong>
+  <nav class='legend clearfix'>
+    <span style='background:#F1EEF6;'></span>
+    <span style='background:#BDC9E1;'></span>
+    <span style='background:#74A9CF;'></span>
+    <span style='background:#2B8CBE;'></span>
+    <span style='background:#045A8D;'></span>
+    <label>0 - 20%</label>
+    <label>40%</label>
+    <label>60%</label>
+    <label>80%</label>
+    <label>100%</label>
+    <small>Source: <a href="#link to source">Name of source</a></small>
+</div>
 
-  <div id="map"></div>
-
-  <body id="body" style="overflow:hidden;">
+<div id='map'></div>
+<body id="body" style="overflow:hidden;">
 
   <div id="abc" name="abc"> 
   <!-- Popup Div Starts Here -->
   <div id="popupContact">
   <!-- Contact Us Form -->
   <form action="#" id="form" method="post" name="form">
-  <img id="close" src="close.png" onclick ="div_hide()">
+    <center>
+  <img id="close" src="img/close.png" onclick ="div_hide()">
   <h4>Select Image that describe your situation</h4>
   <hr>
 
   
 <label>
-  <input type="radio" name="disaster"  value="flood"/>
-  <img src="flood.png"/>
+  <input type="radio" name="disaster" id="disaster" value="flood"/>
+  <img src="img/flood.png"/>
 </label>
 
 
 <label>
-  <input type="radio" name="disaster"   value="fire"/>
-  <img src="fire.png" />
+  <input type="radio" name="disaster" id="disaster"  value="fire"/>
+  <img src="img/fire.png" />
 </label>
-<input type="text" name="info" placeholder="Enter information...">
+<input type="text" name="info" id="info" placeholder="Enter information...">
 
 
   <button onclick="check_empty()">Send</button>
   <!-- <a href="javascript:%20check_empty()" id="submit">Send</a> -->
+</center>
   </form>
   </div>
   <!-- Popup Div Ends Here -->
@@ -97,9 +120,6 @@
   <button id="fit" onclick="div_show()">Send Location!</button>
 
   </body>
+<script src="js/config.dist.js"></script>
+<script src="js/app.js"></script>
 
-  <script src="config.dist.js"></script>
-  <script src="app.js"></script>
-
-
-</html>
