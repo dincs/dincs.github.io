@@ -127,11 +127,7 @@ var marker = new Firebase('https://real-time-tracking-bcce8.firebaseio.com/maps/
 var markers = {};
 
 navigator.geolocation.watchPosition(function(position) {
-<<<<<<< HEAD
 enableHighAccuracy: true,
-=======
-  enableHighAccuracy: true,
->>>>>>> f14f7edd3f5b371eace9094412f0840d56ef3eab
   marker.child(myUuid).set({
     coords: {
       latitude: position.coords.latitude,
