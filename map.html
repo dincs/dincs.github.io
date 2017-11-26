@@ -3,8 +3,6 @@
 
 <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.7.0/lodash.min.js"></script>
- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAscDnI8T-rdkJzht6UflyG6czMX83B01s&callback=initMap"
-  type="text/javascript"></script>
 
 <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
 <script src="js/my_js.js"></script>
@@ -64,24 +62,6 @@
   }
 </style>
 
-<!-- Set the display of this container to none so we can
-     add it programmatically to `legendControl` -->
-<div id='legend' style='display:none;'>
-  <strong>The Title or Explanation of your Map</strong>
-  <nav class='legend clearfix'>
-    <span style='background:#F1EEF6;'></span>
-    <span style='background:#BDC9E1;'></span>
-    <span style='background:#74A9CF;'></span>
-    <span style='background:#2B8CBE;'></span>
-    <span style='background:#045A8D;'></span>
-    <label>0 - 20%</label>
-    <label>40%</label>
-    <label>60%</label>
-    <label>80%</label>
-    <label>100%</label>
-    <small>Source: <a href="#link to source">Name of source</a></small>
-</div>
-
 <div id='map'></div>
 <body id="body" style="overflow:hidden;">
 
@@ -89,7 +69,7 @@
   <!-- Popup Div Starts Here -->
   <div id="popupContact">
   <!-- Contact Us Form -->
-  <form action="#" id="form" method="post" name="form">
+  <form action="#" id="form" method="post" onsubmit="return false">
     <center>
   <img id="close" src="img/close.png" onclick ="div_hide()">
   <h4>Select Image that describe your situation</h4>

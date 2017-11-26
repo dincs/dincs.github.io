@@ -1,54 +1,56 @@
-<html>
-<title>Report List</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-<head>
-  <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/4.5.1/firebase.js"></script>
-  <script src="js/my_js.js"></script>
-  <script>
-$(document).ready(function(){
-    $('#submit1').click(function(){
-        alert("JQuery Running!");
-    });
-});
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link href="css/elements.css" rel="stylesheet">
 
-var database = firebase.database();
-var ref = database.ref('location');
-ref.on('value', gotData);
+<script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.7.0/lodash.min.js"></script>
 
-function gotData(data){
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+<script src="js/my_js.js"></script>
+<script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
+<script src="https://cdn.firebase.com/js/client/2.2.3/firebase.js"></script>
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.min.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.mapbox.css' rel='stylesheet' />
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/css/font-awesome.min.css' rel='stylesheet' />
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/leaflet.markercluster.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.css' rel='stylesheet' />
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.Default.css' rel='stylesheet' />
+<!-- style for button display on map -->
 
-  var location = data.val();
-  var keys = Object.keys(location);
+<style>
+    #fit {
+        display: block;
+        position: relative;
+        margin: 0px auto;
+        width: 50%;
+        height: 40px;
+        padding: 10px;
+        border: none;
+        border-radius: 3px;
+        font-size: 12px;
+        text-align: center;
+        color: #fff;
+        background: #ee8a65;
+    }
+</style>
 
-  for(var i=0;i<keys.length;i++){
-    var k = keys[i];
-    var latitude = location[k].latitude;
-    var longitude = location[k].longitude;
-    var typeDisaster = location[k].typeDisaster;
+<!-- style for button display on map -->
 
-    document.write("<table border=1>");
-    document.write("<tr>");
-    document.write("<td><img  src=img/"+ typeDisaster + ".png height=42 width=42/></td>");
-    document.write("<td>Latitude: "+ latitude);
-    document.write("<td>Longitude: "+ longitude);
-    document.write('<td><button id="submit1" >Delete</button>');
-    document.write("</tr>");
-    document.write("</table>");
-    document.write("<br><br>");
-    
-}
-}
-
-/*$('#del').on('click', '.delete', function() {
-    
-    var clicked = $(this).val();
-    console.log(clicked);
-});*/
-  </script>
-
-</head>
+ <style type="text/css">
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+  <div id='map'></div>
 <body>
-</body>
-</html>
+  </body>
+<script src="js/config.dist.js"></script>
+<script src="js/appAdmin.js"></script>
+

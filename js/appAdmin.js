@@ -64,9 +64,9 @@ function gotData(data){
       "description": 
       '#' + i + '<br>' +
       'Information: ' + info + '<br>' +
-      'Date: ' + date + '<br>' /*+
-      '<button class="like" value='+ k + '>Like</button>' +
-      '<button class="dislike" value='+ k + '>Dislike</button>' */
+      'Date: ' + date + '<br>' +
+      '<button class="delete" value='+ k + '>Delete</button>' + 
+      '<button class="verify" value='+ k + '>Verify</button>'
       ,
       image: 'img/flood.png',
       "icon": {
@@ -97,29 +97,41 @@ map.addLayer(mark);
 }
 }
 //add stored location marker to mapbox - edited
-//function like and dislike
-$('#map').on('click', '.like', function() {
+//function delete
+$(document).on('click', '.delete', function() {
     
     var clicked = $(this).val();
     
-      var database = firebase.database();
-
-      var ref = database.ref('location/'+ clicked + '/' + myUuid);
-      
-      ref.update ({
-        like: true,
-        dislike: false
-      });
-  
-
+    var con = confirm("Are you sure want to delete this data?");
+    if(con==true){
+        alert("Data has been deleted");
+        var ref = database.ref('location');
+        ref.child(clicked).remove();
+        return true;
+    }
+    else{
+        return false;
+    }
 });
+//function delete
 
-$('#map').on('click', '.dislike', function() {
+//function verify
+$(document).on('click', '.verify', function() {
+    
     var clicked = $(this).val();
-    alert(myUuid + " " + clicked);
+    
+    var con = confirm("Are you sure want to verify this data?");
+    if(con==true){
+        alert("Data has been verified");
+        /*var ref = database.ref('location');
+        ref.child(clicked).remove();*/
+        return true;
+    }
+    else{
+        return false;
+    }
 });
-
-//function like and dislike
+//function verify
 
 
 

@@ -1,0 +1,255 @@
+{
+  "location" : {
+    "-KtujfwW8qkqt8z_tPV1" : {
+      "latitude" : 3.0466202,
+      "longitude" : 101.5881511,
+      "typeDisaster" : "fire"
+    },
+    "-Ku-WQfy2fxNoqSPM3Ac" : {
+      "latitude" : 3.0684347,
+      "longitude" : 101.4854192,
+      "typeDisaster" : "fire"
+    },
+    "-Ku-WXOJvE7FZVwPYvDo" : {
+      "latitude" : 3.0684339,
+      "longitude" : 101.4854206,
+      "typeDisaster" : "fire"
+    },
+    "-Ku9BKw_WhUThpPfngDW" : {
+      "551ded34-7c8d-b29e-c1a8-a5f63cffcb1a" : {
+        "dislike" : false,
+        "like" : true
+      },
+      "latitude" : 3.0681994,
+      "longitude" : 101.4988903,
+      "typeDisaster" : "fire"
+    },
+    "-Ku9SgIQS9ibKybz82sV" : {
+      "latitude" : 3.068209,
+      "longitude" : 101.4988903,
+      "typeDisaster" : "fire"
+    },
+    "-Ku9ShkNVyUNVwCTlSGE" : {
+      "latitude" : 3.0681898,
+      "longitude" : 101.4988903,
+      "typeDisaster" : "fire"
+    },
+    "-Ku9SjOFkkfcVgsjmTgA" : {
+      "latitude" : 3.0681709,
+      "longitude" : 101.4988613,
+      "typeDisaster" : "fire"
+    },
+    "-Ku9ToLALpF11OI2vsm6" : {
+      "latitude" : 3.0681762,
+      "longitude" : 101.4989193,
+      "typeDisaster" : "fire"
+    },
+    "-Ku9eGw05OjoI4yQDDGv" : {
+      "latitude" : 3.0685239,
+      "longitude" : 101.48546,
+      "typeDisaster" : "fire"
+    },
+    "-KuF_h0UaoF_gQikhbac" : {
+      "latitude" : 3.0681865,
+      "longitude" : 101.4988872,
+      "typeDisaster" : "fire"
+    },
+    "-KuHcJRUf_XarCIxhQMi" : {
+      "latitude" : 3.068341,
+      "longitude" : 101.4991122,
+      "typeDisaster" : "fire"
+    },
+    "-KuHmisFoyROkxj95DR1" : {
+      "latitude" : 3.071355,
+      "longitude" : 101.4999241,
+      "typeDisaster" : "fire"
+    },
+    "-KuKJLLRdXogK9CWfHzQ" : {
+      "latitude" : 3.0683774,
+      "longitude" : 101.4991021,
+      "typeDisaster" : "fire"
+    },
+    "-KuKUJY_y8H38AcPS00i" : {
+      "latitude" : 3.0681531,
+      "longitude" : 101.4989307,
+      "typeDisaster" : "fire"
+    },
+    "-KuQ-Z0wMx3SsxP8CwuD" : {
+      "latitude" : 3.0681168,
+      "longitude" : 101.4987673,
+      "typeDisaster" : "fire"
+    },
+    "-KuRfpXS3uSrR-VABPHP" : {
+      "latitude" : 3.068257,
+      "longitude" : 101.4990163,
+      "typeDisaster" : "flood"
+    },
+    "-KuTG-U1gJG2uk8-J-eK" : {
+      "latitude" : 3.0681936,
+      "longitude" : 101.4989016,
+      "typeDisaster" : "flood"
+    },
+    "-KuTOBYwEq8ETOb-ArSe" : {
+      "latitude" : 3.0681898,
+      "longitude" : 101.4988903,
+      "typeDisaster" : "fire"
+    },
+    "-KuTkykjo0YJpk-GDEPn" : {
+      "latitude" : 3.0682116,
+      "longitude" : 101.4989656,
+      "typeDisaster" : "fire"
+    },
+    "-KuZ5KKQqfbdTFGmj4Ol" : {
+      "latitude" : 3.0880667,
+      "longitude" : 101.6023952,
+      "typeDisaster" : "flood"
+    },
+    "-KuZPZ0G8LoKs0OIjbOv" : {
+      "latitude" : 3.0675797,
+      "longitude" : 101.4892339,
+      "typeDisaster" : "flood"
+    },
+    "-KueJ_z6oswTMloGUGqS" : {
+      "latitude" : 3.068398,
+      "longitude" : 101.499089,
+      "typeDisaster" : "fire"
+    },
+    "-KueJdgjnjYHk6iRCH63" : {
+      "latitude" : 3.0683448,
+      "longitude" : 101.498986,
+      "typeDisaster" : "fire"
+    },
+    "-KugJU87X1tQhT8BlPk3" : {
+      "latitude" : 3.0719315,
+      "longitude" : 101.5082863,
+      "typeDisaster" : "flood"
+    },
+    "-KugJdKyK1KkOJ55GoXM" : {
+      "latitude" : 3.0719618,
+      "longitude" : 101.5082617,
+      "typeDisaster" : "flood"
+    },
+    "-KuwnjuPWCMdA4woQ4h2" : {
+      "latitude" : 3.0715652,
+      "longitude" : 101.4986082,
+      "typeDisaster" : "fire"
+    },
+    "-Kuwqh5qpbScOEedEmG5" : {
+      "latitude" : 3.0715652,
+      "longitude" : 101.4986082,
+      "typeDisaster" : "fire"
+    },
+    "-Kuz8vMA5D8AXXT2FCRD" : {
+      "latitude" : 3.0681264,
+      "longitude" : 101.4988759,
+      "typeDisaster" : "fire"
+    },
+    "-KuzAcrcA6r0SNy-EuDt" : {
+      "latitude" : 3.0673977,
+      "longitude" : 101.4993342,
+      "typeDisaster" : "fire"
+    },
+    "-KuzArR47Ayf0yTWsbZ-" : {
+      "latitude" : 3.0673977,
+      "longitude" : 101.4993342,
+      "typeDisaster" : "fire"
+    },
+    "-Kv0zNpB_ivUFPzYCs5T" : {
+      "latitude" : 3.0681516,
+      "longitude" : 101.4988681,
+      "typeDisaster" : "fire"
+    },
+    "-Kv0zbFHsKkBFiurnZqA" : {
+      "latitude" : 3.0682281,
+      "longitude" : 101.4990085,
+      "typeDisaster" : "fire"
+    },
+    "-Kv6SKzJzXXTyPuiApDt" : {
+      "latitude" : 3.0684581,
+      "longitude" : 101.4991061,
+      "typeDisaster" : "fire"
+    },
+    "-Kv6SThLuD_FWFmHomzh" : {
+      "latitude" : 3.0684714,
+      "longitude" : 101.4990873,
+      "typeDisaster" : "fire"
+    },
+    "-Kv6SZQe5n47EyUdSXYk" : {
+      "latitude" : 3.0684636,
+      "longitude" : 101.4990977,
+      "typeDisaster" : "fire"
+    },
+    "-Kv6khWqbId-EB1pI1mv" : {
+      "latitude" : 3.0681516,
+      "longitude" : 101.4988681,
+      "typeDisaster" : "fire"
+    },
+    "-Kv6nyx7SdOGHeTzLXg3" : {
+      "latitude" : 3.0682035,
+      "longitude" : 101.4989216,
+      "typeDisaster" : "fire"
+    },
+    "-KvBy2B0laKQeyS4PPWS" : {
+      "latitude" : 3.0719183,
+      "longitude" : 101.5023467,
+      "typeDisaster" : "flood"
+    },
+    "-KwPbv7OAy1fjF6_0QHk" : {
+      "latitude" : 6.1442195,
+      "longitude" : 102.2581176,
+      "typeDisaster" : "fire"
+    },
+    "-KwPpbbpLe8wYTNDnTT8" : {
+      "latitude" : 6.1442076,
+      "longitude" : 102.2581689,
+      "typeDisaster" : "fire"
+    },
+    "-KwZgdPsgUbdx7BUn0W3" : {
+      "latitude" : 6.1442868,
+      "longitude" : 102.2581646,
+      "typeDisaster" : "fire"
+    },
+    "-Kx4VHbIJHjehgy6hoEW" : {
+      "latitude" : 3.0680618,
+      "longitude" : 101.4988794,
+      "typeDisaster" : "fire"
+    },
+    "-Kx6OMjM3QjMDLMlQ_yR" : {
+      "latitude" : 3.0684759,
+      "longitude" : 101.4847751,
+      "typeDisaster" : "fire"
+    },
+    "-KxsJUTJ1uOMplePIkey" : {
+      "information" : "Vggggg",
+      "latitude" : 3.0682189,
+      "longitude" : 101.498857,
+      "typeDisaster" : "fire",
+      "uuid" : "942167fe-3f69-972f-7a47-b8a78804fc06"
+    },
+    "-KyBxNBgdhHv8oGEqN4x" : {
+      "date" : "Sun, 05 Nov 2017 16:13:41 GMT",
+      "information" : "Hello",
+      "latitude" : 3.06819174,
+      "longitude" : 101.49870883,
+      "typeDisaster" : "fire",
+      "uuid" : "942167fe-3f69-972f-7a47-b8a78804fc06"
+    },
+    "-KyBxRi7HnQSAODI-Jyg" : {
+      "date" : "Sun, 05 Nov 2017 16:13:59 GMT",
+      "information" : "Hai",
+      "latitude" : 3.0682316,
+      "longitude" : 101.4988523,
+      "typeDisaster" : "fire",
+      "uuid" : "942167fe-3f69-972f-7a47-b8a78804fc06"
+    }
+  },
+  "maps" : {
+    "dc5bb29a-f1b9-a723-1a35-d7927f54c294" : {
+      "coords" : {
+        "latitude" : 3.0681202,
+        "longitude" : 101.4975776
+      },
+      "timestamp" : 1511091031
+    }
+  }
+}

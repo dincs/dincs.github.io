@@ -54,6 +54,7 @@ navigator.geolocation.getCurrentPosition(
               ref.push(data);
 
       alert("Information has been sent...Thank you!!");
+      window.location.replace("map.html");
         },
         function errorCallback(error) {
             alert("Failed!");

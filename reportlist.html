@@ -1,10 +1,52 @@
 <html>
 <title>Report List</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+<script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.7.0/lodash.min.js"></script>
+ <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
+<script src="https://cdn.firebase.com/js/client/2.2.3/firebase.js"></script>
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.min.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.mapbox.css' rel='stylesheet' />
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/css/font-awesome.min.css' rel='stylesheet' />
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/leaflet.markercluster.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.css' rel='stylesheet' />
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.Default.css' rel='stylesheet' />
 <head>
-	<script src="https://www.gstatic.com/firebasejs/4.5.1/firebase.js"></script>
+<style>
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+</style>
+<style type="text/css">
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+  <script src="https://www.gstatic.com/firebasejs/4.5.1/firebase.js"></script>
   <script src="js/my_js.js"></script>
-	<script>
+  <table id="report" border=1>
+  <script>
 var database = firebase.database();
 var ref = database.ref('location');
 ref.on('value', gotData);
@@ -14,25 +56,121 @@ function gotData(data){
   var location = data.val();
   var keys = Object.keys(location);
 
+  document.getElementById("report").innerHTML+= "<tr><th> No.<th> Type Disaster<th> Information</tr>";
   for(var i=0;i<keys.length;i++){
     var k = keys[i];
     var latitude = location[k].latitude;
     var longitude = location[k].longitude;
     var typeDisaster = location[k].typeDisaster;
+    var date = location[k].date;
+    var information = location[k].information;
 
-    document.write("<table border=1>");
-    document.write("<tr>");
-    document.write("<td><img  src=img/"+ typeDisaster + ".png height=42 width=42/></td>");
-    document.write("<td>Latitude: "+ latitude);
-    document.write("<td>Longitude: "+ longitude);
-    document.write("</tr>");
-    document.write("<table/>");
-    document.write("<br><br>");
+    document.getElementById("report").innerHTML+= "<tr><td>" + (i+1) + "<td><img  src=img/"+ typeDisaster + ".png height=42 width=42/></td><td><b>"+typeDisaster +"</b><br>Information: "+ information + "<br>Latitude: " + latitude +"<br>Longitude: " + longitude +"<br>Date: " + date + "<br><button class='view' lat="+ latitude + " lon="+ longitude + " value="+ k + ">View</button></tr>";
+}
 
 }
+
+$(document).on('click', '.view', function() {
+    
+    var clicked = $(this).val();
+    var lat = $(this).attr('lat');
+    var lon = $(this).attr('lon');
+    
+    //alert(lat + lon);
+    var delTable = document.getElementById("report");
+          delTable.innerHTML="";
+
+    document.getElementById('display').id = 'map'; 
+    L.mapbox.accessToken = 'pk.eyJ1IjoicmlsZXhicmFkZXIiLCJhIjoiY2ozMDAxdnBmMDAzNTMzanMyMjJ5bTZsZyJ9.1KZbtlEhO7mfSELugWCqxA';
+
+    var map = L.mapbox.map('map', 'mapbox.streets', {
+      zoomControl: true,
+      attributionControl: false,
+      tileLayer: {
+        maxNativeZoom: 19
+      }
+    }).setView([lat, lon], 100)
+    L.control.locate().addTo(map);
+
+//add stored location marker to mapbox - edited
+
+var database = firebase.database();
+var ref = database.ref('location');
+ref.on('value', gotData);
+var mark = {};
+
+
+function gotData(data){
+
+  var location = data.val();
+  
+  var keys = Object.keys(location);
+  
+    // The clusterGroup gets each marker in the group added to it
+    // once loaded, and then is added to the map
+  var mark = new L.MarkerClusterGroup();
+
+  for(var i=0;i<keys.length;i++){
+    var k = keys[i];
+    var user = location[k].user;
+    //console.log(user);
+    var latitude = location[k].latitude;
+    var longitude = location[k].longitude;
+    var typeDisaster = location[k].typeDisaster;
+    var date = location[k].date;
+    var info = location[k].information;
+
+    var geoJson = {
+    type: 'FeatureCollection',
+    features:[{
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [longitude, latitude]
+    },  
+    "properties": {
+      "title": typeDisaster,
+      "description": 
+      '#' + i + '<br>' +
+      'Information: ' + info + '<br>' +
+      'Date: ' + date + '<br>' /*+
+      '<button class="like" value='+ k + '>Like</button>' +
+      '<button class="dislike" value='+ k + '>Dislike</button>' */
+      ,
+      image: 'img/flood.png',
+      "icon": {
+              "iconUrl":"img/" + typeDisaster + ".png",
+              "iconSize": [25, 25], // size of the icon
+              "iconAnchor": [25, 25], // point of the icon which will correspond to marker's location
+              "popupAnchor": [0, -25], // point from which the popup should open relative to the iconAnchor
+              "className": "dot"
+          }
+    }
+  }]
+};
+var myLayer = L.mapbox.featureLayer();
+myLayer.on('layeradd', function(e) {
+    var marker = e.layer,
+        feature = marker.feature;
+
+    marker.setIcon(L.icon(feature.properties.icon));
+     var content = '<p><strong>' + feature.properties.title + '</strong><br>'+feature.properties.description +'</p><img src="' + feature.properties.image + '" height=50 width=60>';
+  marker.bindPopup(content);
+});
+
+myLayer.setGeoJSON(geoJson);
+
+
+mark.addLayer(myLayer);
+map.addLayer(mark);
 }
-	</script>
+}
+
+});
+  </script>
+  </table>
 </head>
 <body>
+  <div id="display"></div>
 </body>
 </html>
