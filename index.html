@@ -22,21 +22,57 @@
         text-decoration: none;
         transition: all 0.3s;
     }
-        button.button2{
+        a.button2{
             visibility: hidden
         }
 
-        .panel {
+        .panel{
         color: inherit;
         text-decoration: none;
         transition: all 0.3s;
     }
-        button.panel{
+        a.panel{
             visibility: hidden
         }
 
+        .panel2{
+        color: inherit;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+        a.panel2{
+            visibility: hidden
+        }
+        .response{
+            color: white
+        }
+
+        a.out{
+            visibility: hidden
+        }
+        ul.admin{
+            visibility:hidden;
+        }
         
         </style>
+        <script>
+            var myUuid = localStorage.getItem('myUuid');
+            var database = firebase.database();
+            var ref = database.ref('location/' + myUuid +'/message');
+            var newItems = false;
+
+            ref.on('child_added', function(childSnapshot) {
+              if (!newItems) return;
+
+              alert("You have new message from response operation!!");
+
+              var res = document.getElementById("response");
+              res.style.color = "Yellow";
+            })
+            ref.once('value', function(messages) {
+              newItems = true;
+            });
+        </script>
     </head>
     <body>
         <div class="wrapper">
@@ -59,37 +95,53 @@
                         <a href="#" onclick="load_report()">View Report List</a>
                     </li>
                     <li>
-                        <a href="#" >Relief Contact</a>
+                        <a href="#" class="response" id="response" onclick="load_response()">Check Response</a>
                     </li>
                     <li>
-                        <a href="#" onclick="load_login()">Log In</a>
+                        <a href="#" id="out" class="login" onclick="load_login()">Log In</a>
                     </li>
                         <script>
                             firebase.auth().onAuthStateChanged(firebaseUser=>{
                                 if(firebaseUser){
                                      logout.classList.remove('button2');
                                      adminPanel.classList.remove('panel');
+                                     adminPanel2.classList.remove('panel2');
+                                     admin.classList.remove('admin');
+                                     out.classList.add('out');
                                      console.log('logged in');
                                 }
 
                                 else{
                                     logout.classList.add('button2');
                                     adminPanel.classList.add('panel');
+                                    adminPanel2.classList.add('panel2');
+                                    admin.classList.add('admin');
+                                    out.classList.remove('out');
                                     console.log('not logged in');
                                 }
                           });
-
-
-
                     </script>
                 </ul>
-    
-                    
-                        <button id="adminPanel" class="button panel" onclick="load_reportAdmin()">Admin Panel</button>
-                   
-                        <button id="logout" class="button button2">Log Out</button>
-                  
+                <ul id="admin" class="list-unstyled admin">
+                    <div class="sidebar-header">
+                    <h3>Admin Menu</h3>
+                </div>
+                 <li>
+                    <a href="#" class="button panel" id="adminPanel" onclick="load_reportAdmin()">Map</a>
+                    </li>
+                    <li>
+                        <a href="#" class="button panel2" id="adminPanel2" onclick="load_message()">Crowdsourced data</a>
+                    </li>
+                    <li>
+                        <a href="#" class="button button2" id="logout">Log Out</a>
+                    </li>
+                </ul>
 
+                        
+
+                        
+
+                        
                
             </nav>
 
@@ -153,6 +205,22 @@
     }
     function load_reportAdmin() {
      document.getElementById("line").innerHTML='<object type="text/html" data="reportlistAdmin.html" width="100%" height=500></object>';
+    }
+    function load_message() {
+     document.getElementById("line").innerHTML='<object type="text/html" data="messageVictim.html" width="100%" height=500></object>';
+    }
+
+    function load_response() {
+
+    var res = document.getElementById("response");
+    res.style.color = "White";
+
+     document.getElementById("line").innerHTML='<object type="text/html" data="response.html" width="100%" height=500></object>';
+
+   
+     
+     //document.getElementsByTagName("a")[0].setAttribute("class", "democlass"); 
+
     }
 
     function load_map() {

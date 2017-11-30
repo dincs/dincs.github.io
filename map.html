@@ -86,8 +86,32 @@
   <input type="radio" name="disaster" id="disaster"  value="fire"/>
   <img src="img/fire.png" />
 </label>
-<input type="text" name="info" id="info" placeholder="Enter information...">
 
+<input type="text" name="name" id="name" placeholder="Enter Name...">
+<input type="text" name="age" id="age" placeholder="Enter Age...">
+<input type="text" name="conNumber" id="conNumber" placeholder="Enter contact number...">
+
+<select id="sevLevel">
+<option value="">Select severity level
+<option value="1">1
+<option value="2">2
+<option value="3">3
+<option value="4">4
+</select>
+<br>
+What do you need?<br>
+Water <input type="checkbox" name="urgentNeed" id="urgentNeed0" value="water"/>
+Food <input type="checkbox" name="urgentNeed" id="urgentNeed1" value="food"/>
+
+<br>
+If there any casualties ?<br>
+Yes <input type="radio" name="casualties" id="casualties0" value="There is casualties"/>
+No <input type="radio" name="casualties" id="casualties1" value="There is no casualties"/>
+
+<br>
+If there any help of medication ?<br>
+Yes <input type="radio" name="needMedic" id="needMedic0" value="There is need of medic"/>
+No <input type="radio" name="needMedic" id="needMedic1" value="There is no need of medic"/>
 
   <button onclick="check_empty()">Send</button>
   <!-- <a href="javascript:%20check_empty()" id="submit">Send</a> -->

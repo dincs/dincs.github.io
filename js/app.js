@@ -45,11 +45,17 @@ function gotData(data){
     var k = keys[i];
     var user = location[k].user;
     //console.log(user);
+    var name = location[k].name;
+    var age = location[k].age;
+    var casualties = location[k].casualties;
+    var conNumber = location[k].contactNumber;
+    var nMedic = location[k].needofmedication;
+    var urgentN = location[k].urgentNeed;
     var latitude = location[k].latitude;
     var longitude = location[k].longitude;
     var typeDisaster = location[k].typeDisaster;
+    var sevLevel = location[k].severityLevel;
     var date = location[k].date;
-    var info = location[k].information;
 
     var geoJson = {
     type: 'FeatureCollection',
@@ -62,13 +68,19 @@ function gotData(data){
     "properties": {
       "title": typeDisaster,
       "description": 
-      '#' + i + '<br>' +
-      'Information: ' + info + '<br>' +
-      'Date: ' + date + '<br>' /*+
+      '#' + (i+1) + '<br>' +
+      '<b>Name: </b>' + name + '<br>' +
+      '<b>Age: </b>' + age + '<br>' +
+      '<b>Contact: </b>' + conNumber + '<br>' +
+      '<b>Casualties: </b>' + casualties + '<br>' +
+      '<b>Need of Medication: </b>' + nMedic + '<br>' +
+      '<b>Urgent Need: </b>' + urgentN + '<br>' +
+      '<b>Severity Level: </b>' + sevLevel + '<br>' +
+      '<b>Date: </b>' + date + '<br>' /*+
       '<button class="like" value='+ k + '>Like</button>' +
       '<button class="dislike" value='+ k + '>Dislike</button>' */
       ,
-      image: 'img/flood.png',
+      image: "img/" + typeDisaster + ".png",
       "icon": {
               "iconUrl":"img/" + typeDisaster + ".png",
               "iconSize": [25, 25], // size of the icon

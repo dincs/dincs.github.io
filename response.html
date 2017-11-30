@@ -1,0 +1,66 @@
+<html>
+<head>
+   <script src="https://www.gstatic.com/firebasejs/4.5.1/firebase.js"></script>
+  <script src="js/firebase.js"></script>
+<style>
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+</style>
+<script>
+  /*var myDocument = window.mySource.document;
+  var myTitle = myDocument.getElementById("title");
+  document.write(myTitle.innerHTML);*/
+
+//window.parent.document.getElementById('yourdiv');
+//window.parent.document.getElementsByTagName("a")[0].setAttribute("response", "responseNoty");
+  </script>
+</head>
+<body>
+  <table>
+  <tr><th>Message From Response Operation</tr>
+  </table>
+  <table id='message'>
+<script>
+var myUuid = localStorage.getItem('myUuid');
+//alert(myUuid);
+var database = firebase.database();
+var ref = database.ref('location/' + myUuid +'/message');
+ref.on('value', gotData);
+
+function gotData(data){
+
+  var message = data.val();
+  var keys = Object.keys(message);
+
+  for(var i=0;i<keys.length;i++){
+
+  var k = keys[i];
+  var mes = message[k].message;
+  document.getElementById('message').innerHTML+="<tr><td><b>Response Operation: </b>"+ mes+"</tr>";
+
+  }
+}
+
+ref.on('child_added', function(childSnapshot) {
+  document.getElementById('message').innerHTML="";
+})
+
+</script>
+</table>
+</body>
+</html>

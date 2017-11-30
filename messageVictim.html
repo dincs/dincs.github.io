@@ -44,6 +44,7 @@ th {
       width: 100%;
     }
   </style>
+
   <script src="https://www.gstatic.com/firebasejs/4.5.1/firebase.js"></script>
   <script src="js/my_js.js"></script>
   <table id="report" border=1>
@@ -59,7 +60,7 @@ function gotData(data){
 
   document.getElementById("report").innerHTML+= "<tr><th> No.<th> Type Disaster<th> Information</tr>";
   for(var i=0;i<keys.length;i++){
-     var k = keys[i];
+    var k = keys[i];
     var name = location[k].name;
     var age = location[k].age;
     var casualties = location[k].casualties;
@@ -72,13 +73,31 @@ function gotData(data){
     var sevLevel = location[k].severityLevel;
     var date = location[k].date;
 
-     document.getElementById("report").innerHTML+= "<tr><td>" + (i+1) + "<td><img  src=img/"+ typeDisaster + ".png height=42 width=42/></td><td><b>"+typeDisaster +"</b><br><b>Name: </b>"+ name + "<br><b>Age: </b>" + age +"<br><b>Contact Number: </b>" + conNumber +"<br><b>Casualties: </b>" + casualties + "<br><b>Need of medication: </b>" + nMedic + "<br><b>Urgent Need: </b>" + urgentN + "<br><b>Severity Level: </b>" + sevLevel + "<br><b>Date: </b>" + date + "<br><button class='view' lat="+ latitude + " lon="+ longitude + " value="+ k + ">View</button><br></tr>";
+    document.getElementById("report").innerHTML+= "<tr><td>" + (i+1) + "<td><img  src=img/"+ typeDisaster + ".png height=42 width=42/></td><td><b>"+typeDisaster +"</b><br><b>Name: </b>"+ name + "<br><b>Age: </b>" + age +"<br><b>Contact Number: </b>" + conNumber +"<br><b>Casualties: </b>" + casualties + "<br><b>Need of medication: </b>" + nMedic + "<br><b>Urgent Need: </b>" + urgentN + "<br><b>Severity Level: </b>" + sevLevel + "<br><b>Date: </b>" + date + "<br><button class='view' lat="+ latitude + " lon="+ longitude + " value="+ k + ">View</button><br><br><input type='textarea' id='mes' name='mes' size=50% width=50%><button id='message' class='message' no="+i+" value="+ k + ">Message this victim</button></tr>";
 }
 
 }
-$(document).on('click', '.button hide', function() {
+
+$(document).on('click', '.message', function() {
     var clicked = $(this).val();
-    alert(clicked);
+    var no = $(this).attr('no');
+
+    message = document.getElementsByName("mes")[no].value;
+    if(message==""){
+      alert('please enter message!');
+      return false;
+    }
+    else{
+        var ref = database.ref('location/' + clicked + '/message');
+
+        ref.push({
+          message: message
+        });
+        window.location.replace('messageVictim.html');
+    }
+  //}
+    //var message = prompt("Enter message");
+
 });
 
 $(document).on('click', '.view', function() {
@@ -160,7 +179,7 @@ function gotData(data){
       '<button class="like" value='+ k + '>Like</button>' +
       '<button class="dislike" value='+ k + '>Dislike</button>' */
       ,
-      image: "img/" + typeDisaster + ".png",
+      image: 'img/flood.png',
       "icon": {
               "iconUrl":"img/" + typeDisaster + ".png",
               "iconSize": [25, 25], // size of the icon
