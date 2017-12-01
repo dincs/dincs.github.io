@@ -17,15 +17,17 @@
         <script src="js/login.js"></script>
         <script src="js/firebase.js"></script>
       <script>
-        requestDesktopNotificationPermission(){
-           if(Notification && Notification.permission === 'default') {
-             Notification.requestPermission(function (permission) {
-                if(!('permission' in Notification)) {
-                  Notification.permission = permission;
-                }
-             });
-           }
+        Notification.requestPermission().then(function(result) {
+          if (result === 'denied') {
+            console.log('Permission wasn\'t granted. Allow a retry.');
+            return;
           }
+          if (result === 'default') {
+            console.log('The permission request was dismissed.');
+            return;
+          }
+          // Do something with the granted permission.
+        });
       </script>
         <style>
         .button2 {
