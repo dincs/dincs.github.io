@@ -27,7 +27,6 @@
             return;
           }
           // Do something with the granted permission.
-          var notification = new Notification("Hi there!");
         });
       </script>
         <style>
@@ -78,8 +77,11 @@
             ref.on('child_added', function(childSnapshot) {
               if (!newItems) return;
 
-              alert("You have new message from response operation!!");
-
+              //alert("You have new message from response operation!!");
+               if (Notification.permission === "granted") {
+                // If it's okay let's create a notification
+                var notification = new Notification("You have new message from response operation!!");
+              }
               var res = document.getElementById("response");
               res.style.color = "Yellow";
             })
