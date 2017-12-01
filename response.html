@@ -40,6 +40,7 @@ var myUuid = localStorage.getItem('myUuid');
 //alert(myUuid);
 var database = firebase.database();
 var ref = database.ref('location/' + myUuid +'/message');
+
 ref.on('value', gotData);
 
 function gotData(data){
@@ -51,13 +52,18 @@ function gotData(data){
 
   var k = keys[i];
   var mes = message[k].message;
+  var visit = message[k].visit;
   document.getElementById('message').innerHTML+="<tr><td><b>Response Operation: </b>"+ mes+"</tr>";
-
+  database.ref('location/' + myUuid +'/message/'+ k).update({ visit: 1 });
   }
 }
 
 ref.on('child_added', function(childSnapshot) {
   document.getElementById('message').innerHTML="";
+})
+
+ref.on('child_changed', function(childSnapshot) {
+  document.getElementById('message').innerHTML=""; 
 })
 
 </script>
