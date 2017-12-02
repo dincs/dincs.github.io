@@ -126,7 +126,7 @@ navigator.geolocation.getCurrentPosition(
               var dt = new Date();
               var utcDate = dt.toUTCString();
 
-              var ref = database.ref('location/'+ myUuid);
+              var ref = database.ref('location/'+ myUuid+ '/');
 
               ref.set({
                 name: name,
@@ -171,10 +171,15 @@ navigator.geolocation.getCurrentPosition(
 //Function To Display Popup
 function div_show() {
 document.getElementById('abc').style.display = "block";
+document.getElementById('fit').style.display = "none";
+document.getElementById('map').style.display = "none";
 }
 //Function to Hide Popup
 function div_hide(){
 document.getElementById('abc').style.display = "none";
+document.getElementById('fit').style.display = "block";
+document.getElementById('map').style.display = "block";
+
 }
 
  

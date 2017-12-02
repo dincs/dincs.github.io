@@ -10,6 +10,7 @@
          <!-- Bootstrap CSS CDN -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <!-- Our Custom CSS -->
+        <script type="text/javascript" src="cordova.js"></script>
         <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
          
@@ -56,6 +57,7 @@
         
         </style>
         <script>
+          
             var myUuid = localStorage.getItem('myUuid');
             var database = firebase.database();
             var ref = database.ref('location/' + myUuid +'/message');
@@ -64,14 +66,47 @@
             ref.on('child_added', function(childSnapshot) {
               if (!newItems) return;
 
-              alert("You have new message from response operation!!");
+              var value = childSnapshot.val();
+              var message = value.message;
 
-              var res = document.getElementById("response");
-              res.style.color = "Yellow";
+              document.addEventListener('deviceready', onDeviceReady.bind(this), false);
+              function onDeviceReady() {                               
+                  cordova.plugins.notification.local.schedule({
+                      id: 1,
+                      title: "Message From Response Operation!",
+                      text: message
+                  });
+              };
+
             })
             ref.once('value', function(messages) {
               newItems = true;
             });
+
+            ref.on('value', gotData);
+            function gotData(data){
+
+              var message = data.val();
+              var keys = Object.keys(message);
+
+              for(var i=0;i<keys.length;i++){
+
+                  var k = keys[i];
+                  var mes = message[k].message;
+                  var visit = message[k].visit;
+
+                  if(visit==0){
+                        alert("You have a new message from response operation please check");
+                        var res = document.getElementById("response");
+                        res.style.color = "Yellow";
+                        break;
+                  }
+                  else{
+                        var res = document.getElementById("response");
+                        res.style.color = "White";
+                  }
+              }
+            }
         </script>
     </head>
     <body>

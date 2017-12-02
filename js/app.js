@@ -20,9 +20,20 @@ var map = L.mapbox.map('map', 'mapbox.streets', {
     maxNativeZoom: 19
   }
 }).setView([3.0680776, 101.4975633], 10)
-//map.legendControl.addLegend(document.getElementById('legend').innerHTML);
-L.control.locate().addTo(map);
 
+L.control.locate().addTo(map);
+var legend = L.control({position: 'topleft'});
+
+legend.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'legend');
+    div.innerHTML +=  '<img src="img/flood.png" height=20 width=20>' + '     Flood' + '<br><br>'
+    div.innerHTML +=  '<img src="img/fire.png" height=20 width=20>'  + '     Fire' + '<br><br>'
+    div.innerHTML +=  '<img src="img/marker1.png" height=20 width=20>'   +  '     You' + '<br><br>'
+    div.innerHTML +=  '<img src="img/rescue.png" height=20 width=20>'   +  '     Rescue Operation' + '<br><br>'
+    div.innerHTML +=  '<img src="img/marker.png" height=20 width=20>'   +  '     Other user'
+    return div;
+};
+legend.addTo(map);
 //add stored location marker to mapbox - edited
 
 var database = firebase.database();
@@ -83,8 +94,8 @@ function gotData(data){
       image: "img/" + typeDisaster + ".png",
       "icon": {
               "iconUrl":"img/" + typeDisaster + ".png",
-              "iconSize": [25, 25], // size of the icon
-              "iconAnchor": [25, 25], // point of the icon which will correspond to marker's location
+              "iconSize": [20, 25], // size of the icon
+              "iconAnchor": [20, 25], // point of the icon which will correspond to marker's location
               "popupAnchor": [0, -25], // point from which the popup should open relative to the iconAnchor
               "className": "dot"
           }
@@ -138,29 +149,48 @@ $('#map').on('click', '.dislike', function() {
 var marker = new Firebase('https://real-time-tracking-bcce8.firebaseio.com/maps/');
 var markers = {};
 
-navigator.geolocation.watchPosition(function(position) {
-  marker.child(myUuid).set({
-    coords: {
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude,
-    },
-    timestamp: Math.floor(Date.now() / 1000)
-  })
-}
-);
-
+firebase.auth().onAuthStateChanged(firebaseUser=>{
+      if(firebaseUser){
+         navigator.geolocation.watchPosition(function(position) {
+          enableHighAccuracy: true,
+            marker.child(myUuid).set({
+              coords: {
+                role: 1,
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+              },
+              timestamp: Math.floor(Date.now() / 1000)
+            })
+          }
+          );
+      }
+      else{
+         navigator.geolocation.watchPosition(function(position) {
+          enableHighAccuracy: true,
+            marker.child(myUuid).set({
+              coords: {
+                role:0,
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+              },
+              timestamp: Math.floor(Date.now() / 1000)
+            })
+          }
+          );
+      }
+  });
 
 function addPoint(uuid, position) {
   var myIcon = L.icon({
-  iconUrl: (uuid === myUuid ? 'img/marker1.png' : 'img/marker.png'),
+  iconUrl: (uuid == myUuid ? 'img/marker1.png' : position.coords.role == 1 ? 'img/rescue.png': 'img/marker.png'),
   iconSize: [25, 25], 
   iconAnchor: [15, 25],
 });
-  
+
   var marker = L.marker([position.coords.latitude, position.coords.longitude], {
     icon: myIcon
   })
-  .bindPopup(uuid)
+  .bindPopup(uuid == myUuid ? "You are here" : position.coords.role == 1 ? 'Rescue Operation' : 'Other User')
   .addTo(map)
 
   markers[uuid] = marker;
@@ -222,3 +252,4 @@ setInterval(function() {
     })
   })
 }, 5000);
+

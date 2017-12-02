@@ -51,14 +51,25 @@ th {
   <script>
 var database = firebase.database();
 var ref = database.ref('location');
+
+ref.on('child_changed', function(childSnapshot) {
+  document.getElementById('report').innerHTML=""; 
+})
+
+ref.on('child_removed', function(oldChildSnapshot) {
+  document.getElementById('report').innerHTML=""; 
+})
+
 ref.on('value', gotData);
+
+
 
 function gotData(data){
 
   var location = data.val();
   var keys = Object.keys(location);
 
-  document.getElementById("report").innerHTML+= "<tr><th> No.<th> Type Disaster<th> Information</tr>";
+  document.getElementById("report").innerHTML+= "<tr><th> Type Disaster<th> Information</tr>";
   for(var i=0;i<keys.length;i++){
     var k = keys[i];
     var name = location[k].name;
@@ -72,8 +83,9 @@ function gotData(data){
     var typeDisaster = location[k].typeDisaster;
     var sevLevel = location[k].severityLevel;
     var date = location[k].date;
+    
 
-    document.getElementById("report").innerHTML+= "<tr><td>" + (i+1) + "<td><img  src=img/"+ typeDisaster + ".png height=42 width=42/></td><td><b>"+typeDisaster +"</b><br><b>Name: </b>"+ name + "<br><b>Age: </b>" + age +"<br><b>Contact Number: </b>" + conNumber +"<br><b>Casualties: </b>" + casualties + "<br><b>Need of medication: </b>" + nMedic + "<br><b>Urgent Need: </b>" + urgentN + "<br><b>Severity Level: </b>" + sevLevel + "<br><b>Date: </b>" + date + "<br><button class='view' lat="+ latitude + " lon="+ longitude + " value="+ k + ">View</button><br><br><input type='textarea' id='mes' name='mes' size=50% width=50%><button id='message' class='message' no="+i+" value="+ k + ">Message this victim</button></tr>";
+    document.getElementById("report").innerHTML+= "<tr><td><img  src=img/"+ typeDisaster + ".png height=42 width=42/></td><td><b>"+typeDisaster +"</b><br><b>Name: </b>"+ name + "<br><b>Age: </b>" + age +"<br><b>Contact Number: </b>" + conNumber +"<br><b>Casualties: </b>" + casualties + "<br><b>Need of medication: </b>" + nMedic + "<br><b>Urgent Need: </b>" + urgentN + "<br><b>Severity Level: </b>" + sevLevel + "<br><b>Date: </b>" + date + "<br><button class='view' lat="+ latitude + " lon="+ longitude + " value="+ k + ">View</button><button class='delete' value="+ k + ">Delete</button><br><br><input type='textarea' id='mes' name='mes' size=50% width=50%><button id='message' class='message' no="+i+" value="+ k + ">Message</button></tr>";
 }
 
 }
@@ -85,19 +97,36 @@ $(document).on('click', '.message', function() {
     message = document.getElementsByName("mes")[no].value;
     if(message==""){
       alert('please enter message!');
+      document.getElementsByName("mes")[no].focus();
       return false;
     }
     else{
-        var ref = database.ref('location/' + clicked + '/message');
+        var refMessage = database.ref('location/' + clicked + '/message');
 
-        ref.push({
-          message: message
+        refMessage.push({
+          message: message,
+          visit: 0
         });
+        alert('Message has been sent to this victim!');
         window.location.replace('messageVictim.html');
     }
-  //}
-    //var message = prompt("Enter message");
 
+});
+
+$(document).on('click', '.delete', function() {
+    
+    var clicked = $(this).val();
+    
+    var con = confirm("Are you sure want to delete this data?");
+    if(con==true){
+        alert("Data has been deleted");
+        var ref = database.ref('location');
+        ref.child(clicked).remove();
+        return true;
+    }
+    else{
+        return false;
+    }
 });
 
 $(document).on('click', '.view', function() {

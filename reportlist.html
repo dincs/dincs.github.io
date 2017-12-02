@@ -53,11 +53,11 @@ var ref = database.ref('location');
 ref.on('value', gotData);
 
 function gotData(data){
-
+//open
   var location = data.val();
   var keys = Object.keys(location);
 
-  document.getElementById("report").innerHTML+= "<tr><th> No.<th> Type Disaster<th> Information</tr>";
+  document.getElementById("report").innerHTML+= "<tr><th> Type Disaster<th> Information</tr>";
   for(var i=0;i<keys.length;i++){
      var k = keys[i];
     var name = location[k].name;
@@ -71,10 +71,10 @@ function gotData(data){
     var typeDisaster = location[k].typeDisaster;
     var sevLevel = location[k].severityLevel;
     var date = location[k].date;
-
-     document.getElementById("report").innerHTML+= "<tr><td>" + (i+1) + "<td><img  src=img/"+ typeDisaster + ".png height=42 width=42/></td><td><b>"+typeDisaster +"</b><br><b>Name: </b>"+ name + "<br><b>Age: </b>" + age +"<br><b>Contact Number: </b>" + conNumber +"<br><b>Casualties: </b>" + casualties + "<br><b>Need of medication: </b>" + nMedic + "<br><b>Urgent Need: </b>" + urgentN + "<br><b>Severity Level: </b>" + sevLevel + "<br><b>Date: </b>" + date + "<br><button class='view' lat="+ latitude + " lon="+ longitude + " value="+ k + ">View</button><br></tr>";
+    var role = location[k].role;
+     document.getElementById("report").innerHTML+= "<tr><td><img  src=img/"+ typeDisaster + ".png height=42 width=42/></td><td><b>"+typeDisaster +"</b><br><b>Name: </b>"+ name + "<br><b>Age: </b>" + age +"<br><b>Contact Number: </b>" + conNumber +"<br><b>Casualties: </b>" + casualties + "<br><b>Need of medication: </b>" + nMedic + "<br><b>Urgent Need: </b>" + urgentN + "<br><b>Severity Level: </b>" + sevLevel + "<br><b>Date: </b>" + date + "<br><button class='view' lat="+ latitude + " lon="+ longitude + " value="+ k + ">View</button><br></tr>";
 }
-
+//closed
 }
 $(document).on('click', '.button hide', function() {
     var clicked = $(this).val();
@@ -112,6 +112,7 @@ var mark = {};
 
 
 function gotData(data){
+  //open
 
   var location = data.val();
   
@@ -137,6 +138,7 @@ function gotData(data){
     var sevLevel = location[k].severityLevel;
     var date = location[k].date;
 
+    
     var geoJson = {
     type: 'FeatureCollection',
     features:[{
@@ -171,6 +173,7 @@ function gotData(data){
     }
   }]
 };
+
 var myLayer = L.mapbox.featureLayer();
 myLayer.on('layeradd', function(e) {
     var marker = e.layer,
@@ -186,6 +189,8 @@ myLayer.setGeoJSON(geoJson);
 
 mark.addLayer(myLayer);
 map.addLayer(mark);
+
+//closed
 }
 }
 

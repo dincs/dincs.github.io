@@ -49,18 +49,11 @@
     }
   </style>
 
-<style>
-.legend label,
-.legend span {
-  display:block;
-  float:left;
-  height:15px;
-  width:20%;
-  text-align:center;
-  font-size:9px;
-  color:#808080;
-  }
-</style>
+<div id='legend' style='display:none;'>
+  <strong>Legends</strong><br>
+  <img src="img/flood.png" height=50 width=60>
+    
+</div>
 
 <div id='map'></div>
 <body id="body" style="overflow:hidden;">
@@ -109,7 +102,7 @@ Yes <input type="radio" name="casualties" id="casualties0" value="There is casua
 No <input type="radio" name="casualties" id="casualties1" value="There is no casualties"/>
 
 <br>
-If there any help of medication ?<br>
+Do you need medication ?<br>
 Yes <input type="radio" name="needMedic" id="needMedic0" value="There is need of medic"/>
 No <input type="radio" name="needMedic" id="needMedic1" value="There is no need of medic"/>
 
