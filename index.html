@@ -17,6 +17,19 @@
         <link rel="stylesheet" href="css/style3.css">
         <script src="js/login.js"></script>
         <script src="js/firebase.js"></script>
+      <script>
+        Notification.requestPermission().then(function(result) {
+          if (result === 'denied') {
+            console.log('Permission wasn\'t granted. Allow a retry.');
+            return;
+          }
+          if (result === 'default') {
+            console.log('The permission request was dismissed.');
+            return;
+          }
+          // Do something with the granted permission.
+        });
+      </script>
         <style>
         .button2 {
         color: inherit;
@@ -66,6 +79,7 @@
             ref.on('child_added', function(childSnapshot) {
               if (!newItems) return;
 
+<<<<<<< HEAD
               var value = childSnapshot.val();
               var message = value.message;
 
@@ -78,6 +92,15 @@
                   });
               };
 
+=======
+              //alert("You have new message from response operation!!");
+               if (Notification.permission === "granted") {
+                // If it's okay let's create a notification
+                var notification = new Notification("You have new message from response operation!!");
+              }
+              var res = document.getElementById("response");
+              res.style.color = "Yellow";
+>>>>>>> b6df8f53c0c6551771b015f032b7f84ced7750df
             })
             ref.once('value', function(messages) {
               newItems = true;
