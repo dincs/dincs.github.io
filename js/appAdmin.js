@@ -150,7 +150,7 @@ $(document).on('click', '.message', function() {
       return false;
     }
     else{
-        var refMessage = database.ref('location/' + clicked + '/message');
+        var refMessage = database.ref('location/' + clicked + '/messageVictim');
 
         refMessage.push({
           message: message,
