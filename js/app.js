@@ -173,7 +173,7 @@ function addPoint(uuid, position) {
   var marker = L.marker([position.coords.latitude, position.coords.longitude], {
     icon: myIcon
   })
-  .bindPopup(uuid == myUuid ? "You are here " + displayName : position.coords.role == 1 ? 
+  .bindPopup(uuid == myUuid ? "You are here " : position.coords.role == 1 ? 
     'Rescue Operation':
 
    position.coords.name + ' is here!'

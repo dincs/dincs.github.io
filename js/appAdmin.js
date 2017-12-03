@@ -208,7 +208,7 @@ function addPoint(uuid, position) {
   })
   .bindPopup(uuid == myUuid ? "You are here" : position.coords.role == 1 ? 'Rescue Operation' : 
 
-    'Other User' + '<br><input type="textarea" id="mes" name="mes" size=35% width=35%><button id="messageVictim" class="messageVictim" value='+ uuid + '>Message</button>')
+    position.coords.name + ' is here!' + '<br><input type="textarea" id="mes" name="mes" size=35% width=35%><button id="messageVictim" class="messageVictim" value='+ uuid + '>Message</button>')
   .addTo(map)
 
   markers[uuid] = marker;
