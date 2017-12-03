@@ -34,7 +34,7 @@ var map = L.mapbox.map('map', 'mapbox.streets', {
 }).setView([3.0680776, 101.4975633], 10)
 //map.legendControl.addLegend(document.getElementById('legend').innerHTML);
 L.control.locate().addTo(map);
-var legend = L.control({position: 'topleft'});
+/*var legend = L.control({position: 'topleft'});
 
 legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'legend');
@@ -45,7 +45,7 @@ legend.onAdd = function (map) {
     div.innerHTML +=  '<img src="img/marker.png" height=20 width=20>'   +  '     Other user'
     return div;
 };
-legend.addTo(map);
+legend.addTo(map);*/
 //add stored location marker to mapbox - edited
 
 var database = firebase.database();
