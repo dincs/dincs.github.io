@@ -48,6 +48,10 @@
             color: white
         }
 
+        .user{
+            color: white
+        }
+
         a.out{
             visibility: hidden
         }
@@ -60,7 +64,7 @@
           
             var myUuid = localStorage.getItem('myUuid');
             var database = firebase.database();
-            var refVictim = database.ref('location/' + myUuid +'/messageVictim');
+            var refVictim = database.ref('location/' + myUuid +'/message');
             var newItems = false;
 
             refVictim.on('child_added', function(childSnapshot) {
@@ -97,18 +101,18 @@
 
                   if(visit==0){
                         alert("You have a new message");
-                        var res = document.getElementById("response");
+                        var res = document.getElementById("user");
                         res.style.color = "Yellow";
                         break;
                   }
                   else{
-                        var res = document.getElementById("response");
+                        var res = document.getElementById("user");
                         res.style.color = "White";
                   }
               }
             }
 
-            var refResponse = database.ref('location/' + myUuid +'/messageResponse');
+            var refResponse = database.ref('location/' + myUuid +'/messageVictim');
             var newItems = false;
 
             refResponse.on('child_added', function(childSnapshot) {
@@ -178,7 +182,7 @@
                         <a href="#" onclick="load_report()">View Crowdsourced Data</a>
                     </li>
                     <li>
-                        <a href="#" class="response" id="response" onclick="message()">Check Message</a>
+                        <a href="#" class="user" id="user" onclick="message()">Check Message</a>
                     </li>
                     <li>
                         <a href="#" class="response" id="response" onclick="load_response()">Check Response</a>
@@ -298,7 +302,7 @@
     
     function message() {
 
-    var res = document.getElementById("response");
+    var res = document.getElementById("user");
     res.style.color = "White";
 
      document.getElementById("line").innerHTML='<object type="text/html" data="message.html" width="100%" height=500></object>';

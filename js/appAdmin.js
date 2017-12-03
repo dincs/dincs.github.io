@@ -274,7 +274,7 @@ $(document).on('click', '.messageVictim', function() {
           role: 1,
           visit: 0
         });
-        alert('Message has been sent to this victim!');
+        alert('Message has been sent');
         document.getElementById("mes").value="";
     }
 
