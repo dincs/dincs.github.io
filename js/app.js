@@ -7,6 +7,12 @@ function guid() {
 
 var myUuid = localStorage.getItem('myUuid');
 var displayName = localStorage.getItem('name');
+//alert(displayName);
+if (!displayName) {
+  displayName = "Other user";
+  localStorage.setItem('displayName', displayName);
+}
+
 if (!myUuid) {
   myUuid = guid();
   localStorage.setItem('myUuid', myUuid);
@@ -146,6 +152,7 @@ firebase.auth().onAuthStateChanged(firebaseUser=>{
             marker.child(myUuid).set({
               coords: {
                 role:0,
+                name: displayName,
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
               },
@@ -166,11 +173,10 @@ function addPoint(uuid, position) {
   var marker = L.marker([position.coords.latitude, position.coords.longitude], {
     icon: myIcon
   })
-  .bindPopup(uuid == myUuid ? "You are here" : position.coords.role == 1 ? 
+  .bindPopup(uuid == myUuid ? "You are here " + displayName : position.coords.role == 1 ? 
     'Rescue Operation':
-    displayName ?
-   'Name' + displayName :
-   'Other user'
+
+   position.coords.name + ' is here!'
 
    )
   .addTo(map)
