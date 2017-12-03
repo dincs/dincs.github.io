@@ -168,8 +168,11 @@ function addPoint(uuid, position) {
   })
   .bindPopup(uuid == myUuid ? "You are here" : position.coords.role == 1 ? 
     'Rescue Operation':
+    displayName ?
+   'Name' + displayName :
+   'Other user'
 
-   displayName)
+   )
   .addTo(map)
 
   markers[uuid] = marker;
