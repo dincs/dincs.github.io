@@ -65,6 +65,7 @@
             var myUuid = localStorage.getItem('myUuid');
             var database = firebase.database();
             var refVictim = database.ref('location/' + myUuid +'/message');
+            var refResponse = database.ref('location/' + myUuid +'/messageVictim');
             var newItems = false;
 
             refVictim.on('child_added', function(childSnapshot) {
@@ -111,10 +112,6 @@
                   }
               }
             }
-
-            var refResponse = database.ref('location/' + myUuid +'/messageVictim');
-            var newItems = false;
-
             refResponse.on('child_added', function(childSnapshot) {
               if (!newItems) return;
 
