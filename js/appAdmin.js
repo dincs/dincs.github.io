@@ -6,9 +6,21 @@ function guid() {
 }
 
 var myUuid = localStorage.getItem('myUuid');
+var displayName = localStorage.getItem('name');
+var displayAge = localStorage.getItem('age');
 if (!myUuid) {
   myUuid = guid();
   localStorage.setItem('myUuid', myUuid);
+}
+
+if (!displayName) {
+  displayName = "Other user";
+  localStorage.setItem('displayName', displayName);
+}
+
+if (!displayAge) {
+  displayAge = "None";
+  localStorage.setItem('displayAge', displayAge);
 }
 
 L.mapbox.accessToken = 'pk.eyJ1IjoicmlsZXhicmFkZXIiLCJhIjoiY2ozMDAxdnBmMDAzNTMzanMyMjJ5bTZsZyJ9.1KZbtlEhO7mfSELugWCqxA';
@@ -186,6 +198,8 @@ firebase.auth().onAuthStateChanged(firebaseUser=>{
             marker.child(myUuid).set({
               coords: {
                 role:0,
+                name: displayName,
+                age: displayAge,
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
               },
@@ -208,7 +222,7 @@ function addPoint(uuid, position) {
   })
   .bindPopup(uuid == myUuid ? "You are here" : position.coords.role == 1 ? 'Rescue Operation' : 
 
-    position.coords.name + ' is here!' + '<br><input type="textarea" id="mes" name="mes" size=35% width=35%><button id="messageVictim" class="messageVictim" value='+ uuid + '>Message</button>')
+    position.coords.name + ' is here!' + '<br>' + 'Age: ' + position.coords.age + '<br><input type="textarea" id="mes" name="mes" size=35% width=35%><button id="messageVictim" class="messageVictim" value='+ uuid + '>Message</button>')
   .addTo(map)
 
   markers[uuid] = marker;

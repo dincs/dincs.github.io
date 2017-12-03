@@ -40,6 +40,7 @@ function check_empty()
 
   //var displayName = localStorage.name = name;
   var displayName = localStorage.setItem("name", name);
+  var displayAge = localStorage.setItem("age", age);
 
  if (name=="") {
   alert("ERROR! Please enter name !");
