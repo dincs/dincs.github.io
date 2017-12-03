@@ -32,14 +32,14 @@ th {
 </head>
 <body>
   <table>
-  <tr><th>Message From Response Operation</tr>
+  <tr><th>Message</tr>
   </table>
   <table id='message'>
 <script>
 var myUuid = localStorage.getItem('myUuid');
 //alert(myUuid);
 var database = firebase.database();
-var ref = database.ref('location/' + myUuid +'/messageVictim');
+var ref = database.ref('location/' + myUuid +'/message');
 
 ref.on('value', gotData);
 
@@ -54,10 +54,11 @@ function gotData(data){
   var mes = message[k].message;
   var visit = message[k].visit;
   var role = message[k].role;
+  if(role==0){
+    document.getElementById('message').innerHTML+="<tr><td><b>Message from other user: </b>"+ mes+"</tr>";
+    database.ref('location/' + myUuid +'/message/'+ k).update({ visit: 1 });
+  }
   
-  document.getElementById('message').innerHTML+="<tr><td><b>Response Operation: </b>"+ mes+"</tr>";
-  
-    database.ref('location/' + myUuid +'/messageVictim/'+ k).update({ visit: 1 });
     }
 }
 

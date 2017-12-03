@@ -206,7 +206,9 @@ function addPoint(uuid, position) {
   var marker = L.marker([position.coords.latitude, position.coords.longitude], {
     icon: myIcon
   })
-  .bindPopup(uuid == myUuid ? "You are here" : position.coords.role == 1 ? 'Rescue Operation' : 'Other User')
+  .bindPopup(uuid == myUuid ? "You are here" : position.coords.role == 1 ? 'Rescue Operation' : 
+
+    'Other User' + '<br><input type="textarea" id="mes" name="mes" size=35% width=35%><button id="messageVictim" class="messageVictim" value='+ uuid + '>Message</button>')
   .addTo(map)
 
   markers[uuid] = marker;
@@ -250,6 +252,33 @@ marker.on('child_removed', function(oldChildSnapshot) {
 
   removePoint(uuid)
 })
+
+$(document).on('click', '.messageVictim', function() {
+    var clicked = $(this).val();
+    //var no = $(this).attr('no');
+
+    message = document.getElementById("mes").value;
+   /* alert(message);
+    alert(clicked);
+    alert(myUuid);*/
+    if(message==""){
+      alert('Please enter message!');
+      document.getElementById("mes").focus();
+      return false;
+    }
+    else{
+        var refMessage = database.ref('location/' + clicked + '/messageVictim');
+
+        refMessage.push({
+          message: message,
+          role: 1,
+          visit: 0
+        });
+        alert('Message has been sent to this victim!');
+        document.getElementById("mes").value="";
+    }
+
+});
 
 
 // Remove old markers

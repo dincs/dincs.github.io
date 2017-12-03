@@ -17,19 +17,6 @@
         <link rel="stylesheet" href="css/style3.css">
         <script src="js/login.js"></script>
         <script src="js/firebase.js"></script>
-      <script>
-        Notification.requestPermission().then(function(result) {
-          if (result === 'denied') {
-            console.log('Permission wasn\'t granted. Allow a retry.');
-            return;
-          }
-          if (result === 'default') {
-            console.log('The permission request was dismissed.');
-            return;
-          }
-          // Do something with the granted permission.
-        });
-      </script>
         <style>
         .button2 {
         color: inherit;
@@ -73,13 +60,12 @@
           
             var myUuid = localStorage.getItem('myUuid');
             var database = firebase.database();
-            var ref = database.ref('location/' + myUuid +'/message');
+            var refVictim = database.ref('location/' + myUuid +'/messageVictim');
             var newItems = false;
 
-            ref.on('child_added', function(childSnapshot) {
+            refVictim.on('child_added', function(childSnapshot) {
               if (!newItems) return;
 
-<<<<<<< HEAD
               var value = childSnapshot.val();
               var message = value.message;
 
@@ -87,26 +73,17 @@
               function onDeviceReady() {                               
                   cordova.plugins.notification.local.schedule({
                       id: 1,
-                      title: "Message From Response Operation!",
+                      title: "You got a new message!",
                       text: message
                   });
               };
 
-=======
-              //alert("You have new message from response operation!!");
-               if (Notification.permission === "granted") {
-                // If it's okay let's create a notification
-                var notification = new Notification("You have new message from response operation!!");
-              }
-              var res = document.getElementById("response");
-              res.style.color = "Yellow";
->>>>>>> b6df8f53c0c6551771b015f032b7f84ced7750df
             })
-            ref.once('value', function(messages) {
+            refVictim.once('value', function(messages) {
               newItems = true;
             });
 
-            ref.on('value', gotData);
+            refVictim.on('value', gotData);
             function gotData(data){
 
               var message = data.val();
@@ -119,7 +96,55 @@
                   var visit = message[k].visit;
 
                   if(visit==0){
-                        alert("You have a new message from response operation please check");
+                        alert("You have a new message");
+                        var res = document.getElementById("response");
+                        res.style.color = "Yellow";
+                        break;
+                  }
+                  else{
+                        var res = document.getElementById("response");
+                        res.style.color = "White";
+                  }
+              }
+            }
+
+            var refResponse = database.ref('location/' + myUuid +'/messageResponse');
+            var newItems = false;
+
+            refResponse.on('child_added', function(childSnapshot) {
+              if (!newItems) return;
+
+              var value = childSnapshot.val();
+              var message = value.message;
+
+              document.addEventListener('deviceready', onDeviceReady.bind(this), false);
+              function onDeviceReady() {                               
+                  cordova.plugins.notification.local.schedule({
+                      id: 1,
+                      title: "You got a new message from response operation!",
+                      text: message
+                  });
+              };
+
+            })
+            refResponse.once('value', function(messages) {
+              newItems = true;
+            });
+
+            refResponse.on('value', gotData);
+            function gotData(data){
+
+              var message = data.val();
+              var keys = Object.keys(message);
+
+              for(var i=0;i<keys.length;i++){
+
+                  var k = keys[i];
+                  var mes = message[k].message;
+                  var visit = message[k].visit;
+
+                  if(visit==0){
+                        alert("You got a new message from response operation!");
                         var res = document.getElementById("response");
                         res.style.color = "Yellow";
                         break;
@@ -150,7 +175,10 @@
                         <a href="#" onclick="load_map()">View Map</a>
                     </li>
                     <li>
-                        <a href="#" onclick="load_report()">View Report List</a>
+                        <a href="#" onclick="load_report()">View Crowdsourced Data</a>
+                    </li>
+                    <li>
+                        <a href="#" class="response" id="response" onclick="message()">Check Message</a>
                     </li>
                     <li>
                         <a href="#" class="response" id="response" onclick="load_response()">Check Response</a>
@@ -266,6 +294,19 @@
     }
     function load_message() {
      document.getElementById("line").innerHTML='<object type="text/html" data="messageVictim.html" width="100%" height=500></object>';
+    }
+    
+    function message() {
+
+    var res = document.getElementById("response");
+    res.style.color = "White";
+
+     document.getElementById("line").innerHTML='<object type="text/html" data="message.html" width="100%" height=500></object>';
+
+   
+     
+     //document.getElementsByTagName("a")[0].setAttribute("class", "democlass"); 
+
     }
 
     function load_response() {

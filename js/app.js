@@ -120,31 +120,6 @@ map.addLayer(mark);
 }
 }
 //add stored location marker to mapbox - edited
-//function like and dislike
-$('#map').on('click', '.like', function() {
-    
-    var clicked = $(this).val();
-    
-      var database = firebase.database();
-
-      var ref = database.ref('location/'+ clicked + '/' + myUuid);
-      
-      ref.update ({
-        like: true,
-        dislike: false
-      });
-  
-
-});
-
-$('#map').on('click', '.dislike', function() {
-    var clicked = $(this).val();
-    alert(myUuid + " " + clicked);
-});
-
-//function like and dislike
-
-
 
 var marker = new Firebase('https://real-time-tracking-bcce8.firebaseio.com/maps/');
 var markers = {};
@@ -190,7 +165,10 @@ function addPoint(uuid, position) {
   var marker = L.marker([position.coords.latitude, position.coords.longitude], {
     icon: myIcon
   })
-  .bindPopup(uuid == myUuid ? "You are here" : position.coords.role == 1 ? 'Rescue Operation' : 'Other User')
+  .bindPopup(uuid == myUuid ? "You are here" : position.coords.role == 1 ? 
+    'Rescue Operation':
+
+   'Other User')
   .addTo(map)
 
   markers[uuid] = marker;
@@ -234,6 +212,7 @@ marker.on('child_removed', function(oldChildSnapshot) {
 
   removePoint(uuid)
 })
+
 
 
 // Remove old markers
