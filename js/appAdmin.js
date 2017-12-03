@@ -150,7 +150,7 @@ $(document).on('click', '.message', function() {
       return false;
     }
     else{
-        var refMessage = database.ref('location/' + clicked + '/messageVictim');
+        var refMessage = database.ref('location/' + clicked + '/message');
 
         refMessage.push({
           message: message,
@@ -267,14 +267,14 @@ $(document).on('click', '.messageVictim', function() {
       return false;
     }
     else{
-        var refMessage = database.ref('location/' + clicked + '/messageVictim');
+        var refMessage = database.ref('location/' + clicked + '/message');
 
         refMessage.push({
           message: message,
           role: 1,
           visit: 0
         });
-        alert('Message has been sent');
+        alert('Message has been sent to this victim!');
         document.getElementById("mes").value="";
     }
 

@@ -39,7 +39,7 @@ th {
 var myUuid = localStorage.getItem('myUuid');
 //alert(myUuid);
 var database = firebase.database();
-var ref = database.ref('location/' + myUuid +'/messageVictim');
+var ref = database.ref('location/' + myUuid +'/message');
 
 ref.on('value', gotData);
 
@@ -57,7 +57,7 @@ function gotData(data){
   
   document.getElementById('message').innerHTML+="<tr><td><b>Response Operation: </b>"+ mes+"</tr>";
   
-    database.ref('location/' + myUuid +'/messageVictim/'+ k).update({ visit: 1 });
+    database.ref('location/' + myUuid +'/message/'+ k).update({ visit: 1 });
     }
 }
 
