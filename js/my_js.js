@@ -34,18 +34,14 @@ function check_empty()
   var name = document.getElementById("name").value;
   var age = document.getElementById("age").value;
   var conNumber = document.getElementById("conNumber").value;
-  var disaster = document.getElementById("disaster").value;
+  //var disaster0 = document.getElementById("disaster0").value;
+  //var disaster1 = document.getElementById("disaster1").value;
   var sevLevel = document.getElementById("sevLevel").value;
 
   //var displayName = localStorage.name = name;
   var displayName = localStorage.setItem("name", name);
 
-  if (disaster=="") {
-  alert("ERROR! Please select disaster type !");
-  document.getElementById("disaster").focus();
-  return false;
-}
-else if (name=="") {
+ if (name=="") {
   alert("ERROR! Please enter name !");
   document.getElementById("name").focus();
   return false;
@@ -108,15 +104,16 @@ var uNeed = new Array();
       }
   //alert(nMedic);
 
-      var test = document.getElementsByName("disaster");
-      for (var i = 0, length = test.length; i < length; i++) {
-              if (test[i].checked) {
-                  var type = test[i].value;
-                  break;
-              }
-          }
+      //var test = document.getElementById("disaster");
+      for(var i=0;i<2;++i){
+        var disasterType = document.getElementById("disaster" +i);
+            if (disasterType.checked) {
+                            var type = disasterType.value;
+                            break;
+                        }
+        }
+        
 
-    //alert(type);
 
 
 if (navigator.geolocation) {

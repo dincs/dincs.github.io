@@ -6,6 +6,7 @@ function guid() {
 }
 
 var myUuid = localStorage.getItem('myUuid');
+var displayName = localStorage.getItem('name');
 if (!myUuid) {
   myUuid = guid();
   localStorage.setItem('myUuid', myUuid);
@@ -168,7 +169,7 @@ function addPoint(uuid, position) {
   .bindPopup(uuid == myUuid ? "You are here" : position.coords.role == 1 ? 
     'Rescue Operation':
 
-   'Other User')
+   displayName)
   .addTo(map)
 
   markers[uuid] = marker;
