@@ -37,6 +37,8 @@ function check_empty()
   var disaster = document.getElementById("disaster").value;
   var sevLevel = document.getElementById("sevLevel").value;
 
+  //var displayName = localStorage.name = name;
+  var displayName = localStorage.setItem("name", name);
 
   if (disaster=="") {
   alert("ERROR! Please select disaster type !");
