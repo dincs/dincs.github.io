@@ -183,7 +183,7 @@ function addPoint(uuid, position) {
   .bindPopup(uuid == myUuid ? "You are here " : position.coords.role == 1 ? 
     'Rescue Operation':
 
-   position.coords.name + ' is here! <br>' + 'Age: ' + position.coords.age
+  'Name: ' + position.coords.name + ' <br>' + 'Age: ' + position.coords.age
 
    )
   .addTo(map)
