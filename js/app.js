@@ -234,7 +234,7 @@ $(document).on('click', '.message', function() {
           role: 0,
           visit: 0
         });
-        alert('Message has been sent');
+        alert('Message has been sent to this user');
         document.getElementById("mes").value="";
     }
 
