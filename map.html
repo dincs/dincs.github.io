@@ -65,10 +65,11 @@
   <form action="#" id="form" method="post" onsubmit="return false">
     <center>
   <img id="close" src="img/close.png" onclick ="div_hide()">
-  <h4>Select Image that describe your situation</h4>
-  <hr>
+  <table border=1><tr><td>
+  <h4 align=center>Select Image that describe your situation</h4>
 
-  
+
+  <center>
 <label>
   <input type="radio" name="disaster" id="disaster0" value="flood"/>
   <img src="img/flood.png"/>
@@ -79,6 +80,10 @@
   <input type="radio" name="disaster" id="disaster1"  value="fire"/>
   <img src="img/fire.png" />
 </label>
+</center>
+</td>
+</tr>
+</table>
 
 <input type="text" name="name" id="name" placeholder="Enter Name...">
 <input type="text" name="age" id="age" placeholder="Enter Age...">
@@ -92,19 +97,19 @@
 <option value="4">4
 </select>
 <br>
-What do you need?<br>
-Water <input type="checkbox" name="urgentNeed" id="urgentNeed0" value="water"/>
-Food <input type="checkbox" name="urgentNeed" id="urgentNeed1" value="food"/>
+<b>What do you need?</b><br>
+Water <input type="checkbox" name="urgentNeed" id="urgentNeed0" value="Water"/>
+Food <input type="checkbox" name="urgentNeed" id="urgentNeed1" value="Food"/>
 
-<br>
-If there any casualties ?<br>
-Yes <input type="radio" name="casualties" id="casualties0" value="There is casualties"/>
-No <input type="radio" name="casualties" id="casualties1" value="There is no casualties"/>
+<br><b>
+Is there any casualties ?</b><br>
+Yes <input type="radio" name="casualties" id="casualties0" value="Yes"/>
+No <input type="radio" name="casualties" id="casualties1" value="No"/>
 
-<br>
-Do you need medication ?<br>
-Yes <input type="radio" name="needMedic" id="needMedic0" value="There is need of medic"/>
-No <input type="radio" name="needMedic" id="needMedic1" value="There is no need of medic"/>
+<br><b>
+Do you need medication ?</b><br>
+Yes <input type="radio" name="needMedic" id="needMedic0" value="Yes"/>
+No <input type="radio" name="needMedic" id="needMedic1" value="No"/>
 
   <button onclick="check_empty()">Send</button>
   <!-- <a href="javascript:%20check_empty()" id="submit">Send</a> -->
@@ -114,7 +119,7 @@ No <input type="radio" name="needMedic" id="needMedic1" value="There is no need 
   <!-- Popup Div Ends Here -->
   </div>
   <!-- Display Popup Button -->
-  <button id="fit" onclick="div_show()">Send Location!</button>
+  <button id="fit" onclick="div_show()">Send Information!</button>
 
   </body>
 <script src="js/config.dist.js"></script>

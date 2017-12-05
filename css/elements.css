@@ -22,16 +22,16 @@ cursor:pointer
 }
 div#popupContact {
 position:absolute;
-right:-3;
-top:10%;
+right:10;
+top:2%;
 margin-left:-202px;
 font-family:'Raleway',sans-serif
 }
 form {
-max-width:300;
-min-width:300;
-max-height:500;
-min-height:500;
+max-width:200;
+min-width:200;
+max-height:400;
+min-height:400;
 padding:30px ;
 border:2px solid gray;
 font-family:raleway;
@@ -53,12 +53,17 @@ border:0;
 border-top:1px solid #ccc
 }
 input[type=text] {
-width:82%;
+width:84%;
 padding:10px;
-margin-top:30px;
+margin-top:10px;
 border:1px solid #ccc;
-padding-left:40px;
-font-size:16px;
+padding-left:10px;
+font-size:10px;
+font-family:raleway
+}
+
+input[type=select] {
+font-size:10px;
 font-family:raleway
 }
 
@@ -69,7 +74,7 @@ font-family:raleway
 }
 
 input[type=radio]:checked + label>img {
-  border: 1px solid #fff;
+  border: 2px solid #fff;
   box-shadow: 0 0 3px 3px #090;
 }
 

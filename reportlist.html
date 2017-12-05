@@ -50,6 +50,15 @@ th {
   <script>
 var database = firebase.database();
 var ref = database.ref('location');
+
+ref.on('child_changed', function(childSnapshot) {
+  document.getElementById('report').innerHTML=""; 
+})
+
+ref.on('child_removed', function(oldChildSnapshot) {
+  document.getElementById('report').innerHTML=""; 
+})
+
 ref.on('value', gotData);
 
 function gotData(data){

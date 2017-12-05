@@ -25,7 +25,6 @@ if (!myUuid) {
 
 
   var database = firebase.database();
-  //var ref = database.ref('location/'+ myUuid + '/');
 
 
 // Validating Empty Field
@@ -34,13 +33,11 @@ function check_empty()
   var name = document.getElementById("name").value;
   var age = document.getElementById("age").value;
   var conNumber = document.getElementById("conNumber").value;
-  //var disaster0 = document.getElementById("disaster0").value;
-  //var disaster1 = document.getElementById("disaster1").value;
   var sevLevel = document.getElementById("sevLevel").value;
 
-  //var displayName = localStorage.name = name;
   var displayName = localStorage.setItem("name", name);
   var displayAge = localStorage.setItem("age", age);
+  var displayContact = localStorage.setItem("conNumber", conNumber);
 
  if (name=="") {
   alert("ERROR! Please enter name !");
@@ -87,6 +84,7 @@ var uNeed = new Array();
           uNeed.push(urgentNeed.value);
         }
       }
+      var displayuNeed = localStorage.setItem("uNeed", uNeed);
   //alert(uNeed);
 
       for(var i=0;i<2;++i){
@@ -95,6 +93,7 @@ var uNeed = new Array();
           var cas = casualties.value;
         }
       }
+      var displayCas = localStorage.setItem("cas", cas);
   //alert(cas);
 
       for(var i=0;i<2;++i){
@@ -103,6 +102,7 @@ var uNeed = new Array();
           var nMedic = needMedic.value;
         }
       }
+      var displaynMedic = localStorage.setItem("nMedic", nMedic);
   //alert(nMedic);
 
       //var test = document.getElementById("disaster");
@@ -113,7 +113,7 @@ var uNeed = new Array();
                             break;
                         }
         }
-        
+        var displayType = localStorage.setItem("type", type);
 
 
 
@@ -125,6 +125,7 @@ navigator.geolocation.getCurrentPosition(
               lon = position.coords.longitude;
               var dt = new Date();
               var utcDate = dt.toUTCString();
+              var displayDate = localStorage.setItem("utcDate", utcDate);
 
               var ref = database.ref('location/'+ myUuid+ '/');
 
@@ -143,7 +144,6 @@ navigator.geolocation.getCurrentPosition(
               });
 
       alert("Information has been sent...please wait for our unit to response");
-      //window.location.replace("map.html");
         },
         function errorCallback(error) {
             alert("Failed!");

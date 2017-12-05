@@ -78,8 +78,8 @@
               function onDeviceReady() {                               
                   cordova.plugins.notification.local.schedule({
                       id: 1,
-                      title: "Message From Response Operation!",
-                      text: message
+                      title: "You got a new message!",
+                      text: "Response Operation: " + message
                   });
               };
 
@@ -101,7 +101,7 @@
                   var visit = message[k].visit;
 
                   if(visit==0){
-                        alert("You have a new message from response operation please check");
+                        alert("You have a new message from response operation, please check");
                         var res = document.getElementById("response");
                         res.style.color = "Yellow";
                         break;
@@ -196,13 +196,13 @@
                                 <i class="glyphicon glyphicon-align-left"></i>
                                 <span>Open</span>
                             </button>
-                            <span><h5>Welcome to Crowdsource GPS-Tracker Mobile Application!<h5></span>
+                            
                         </div>
                     </div>
-                    <p id="line">
-                          
+                    <div id="line">
+                          <span><h5>Welcome to Crowdsource GPS-Tracker Mobile Application!<h5></span>
                             <object type="text/html" data="map.html" width="100%" height=500></object>
-                    </p>
+                    </div>
                 </nav>
                 
             </div>

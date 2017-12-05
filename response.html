@@ -39,7 +39,7 @@ th {
 var myUuid = localStorage.getItem('myUuid');
 //alert(myUuid);
 var database = firebase.database();
-var ref = database.ref('location/' + myUuid +'/message');
+var ref = database.ref('location/' + myUuid +'/message'); 
 
 ref.on('value', gotData);
 
