@@ -1,4 +1,4 @@
-function guid() {
+ function guid() {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
   }
@@ -7,7 +7,7 @@ function guid() {
 
 var myUuid = localStorage.getItem('myUuid');
 var displayName = localStorage.getItem('name');
-var displayAge = localStorage.getItem('age');
+var displayAge = localStorage.getItem('age'); 
 var displayContact = localStorage.getItem('conNumber');
 var displayuNeed = localStorage.getItem('uNeed');
 var displayCas = localStorage.getItem('cas');

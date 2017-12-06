@@ -33,11 +33,6 @@ function check_empty()
   var name = document.getElementById("name").value;
   var age = document.getElementById("age").value;
   var conNumber = document.getElementById("conNumber").value;
-  var sevLevel = document.getElementById("sevLevel").value;
-
-  var displayName = localStorage.setItem("name", name);
-  var displayAge = localStorage.setItem("age", age);
-  var displayContact = localStorage.setItem("conNumber", conNumber);
 
  if (name=="") {
   alert("ERROR! Please enter name !");
@@ -52,11 +47,6 @@ else if (age=="") {
 else if (conNumber=="") {
   alert("ERROR! Please enter contact number !");
   document.getElementById("conNumber").focus();
-  return false;
-}
-else if (sevLevel=="") {
-  alert("ERROR! Please select severity level !");
-  document.getElementById("sevLevel").focus();
   return false;
 }
 else if (urgentNeed=="") {
@@ -84,8 +74,6 @@ var uNeed = new Array();
           uNeed.push(urgentNeed.value);
         }
       }
-      var displayuNeed = localStorage.setItem("uNeed", uNeed);
-  //alert(uNeed);
 
       for(var i=0;i<2;++i){
          var casualties = document.getElementById("casualties" +i);
@@ -93,8 +81,6 @@ var uNeed = new Array();
           var cas = casualties.value;
         }
       }
-      var displayCas = localStorage.setItem("cas", cas);
-  //alert(cas);
 
       for(var i=0;i<2;++i){
          var needMedic = document.getElementById("needMedic" +i);
@@ -102,10 +88,7 @@ var uNeed = new Array();
           var nMedic = needMedic.value;
         }
       }
-      var displaynMedic = localStorage.setItem("nMedic", nMedic);
-  //alert(nMedic);
 
-      //var test = document.getElementById("disaster");
       for(var i=0;i<2;++i){
         var disasterType = document.getElementById("disaster" +i);
             if (disasterType.checked) {
@@ -113,8 +96,18 @@ var uNeed = new Array();
                             break;
                         }
         }
-        var displayType = localStorage.setItem("type", type);
+        
 
+var displayName = localStorage.setItem("name", name);
+var displayAge = localStorage.setItem("age", age);
+var displayContact = localStorage.setItem("conNumber", conNumber);
+var displayuNeed = localStorage.setItem("uNeed", uNeed);
+var displayCas = localStorage.setItem("cas", cas);
+var displaynMedic = localStorage.setItem("nMedic", nMedic);
+var displayType = localStorage.setItem("type", type);
+var dt = new Date();
+var utcDate = dt.toUTCString();
+var displayDate = localStorage.setItem("utcDate", utcDate);
 
 
 if (navigator.geolocation) {
@@ -123,9 +116,6 @@ navigator.geolocation.getCurrentPosition(
         function(position) {
               lat = position.coords.latitude;
               lon = position.coords.longitude;
-              var dt = new Date();
-              var utcDate = dt.toUTCString();
-              var displayDate = localStorage.setItem("utcDate", utcDate);
 
               var ref = database.ref('location/'+ myUuid+ '/');
 
@@ -133,7 +123,6 @@ navigator.geolocation.getCurrentPosition(
                 name: name,
                 age: age,
                 contactNumber: conNumber,
-                severityLevel: sevLevel,
                 urgentNeed: uNeed,
                 casualties: cas,
                 needofmedication: nMedic,

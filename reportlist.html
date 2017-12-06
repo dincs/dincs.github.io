@@ -44,51 +44,98 @@ th {
       width: 100%;
     }
   </style>
+
   <script src="https://www.gstatic.com/firebasejs/4.5.1/firebase.js"></script>
   <script src="js/my_js.js"></script>
+  <h3 align=center>User who online</h3>
   <table id="report" border=1>
+    <tr><th>User<th> Information</tr>
   <script>
-var database = firebase.database();
-var ref = database.ref('location');
 
-ref.on('child_changed', function(childSnapshot) {
-  document.getElementById('report').innerHTML=""; 
+//--------------------------------------Track User--------------------------------------//
+var marker = new Firebase('https://real-time-tracking-bcce8.firebaseio.com/maps/');
+
+var markers = {};
+
+function addPoint(uuid, position) {
+    var typeDisaster = position.coords.typeofdisaster;
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    var name = position.coords.name;
+    var age = position.coords.age;
+    var contact = position.coords.contact; 
+    var casualties = position.coords.casualties;
+    var medication = position.coords.medication;
+    var urgentneed = position.coords.urgentneed;
+    var date = position.coords.date;
+    var role = position.coords.role;
+
+    if(role==1){
+      document.getElementById("report").innerHTML+= "<tr><td><img  src='img/rescue.png' height=42 width=42/></td><td>Rescue Operation<br><button class='view' lat="+ latitude + " lon="+ longitude + " value="+ uuid + ">Track</button><br></tr>";
+    }
+    else{
+      document.getElementById("report").innerHTML+= "<tr><td><img  src=img/marker.png height=42 width=42/></td><td><b>"+typeDisaster +"</b><br><b>Name: </b>"+ name + "<br><b>Age: </b>" + age +"<br><b>Contact Number: </b>" + contact +"<br><b>Casualties: </b>" + casualties + "<br><b>Need of medication: </b>" + medication + "<br><b>Urgent Need: </b>" + urgentneed + "<br><b>Date: </b>" + date + "<br><button class='view' lat="+ latitude + " lon="+ longitude + " value="+ uuid + ">Track</button><br></tr>";
+    }
+    
+}
+
+function removePoint(uuid) {
+  map.removeLayer(markers[uuid])
+}
+
+function updatePoint(uuid, position) {
+  var marker = markers[uuid]
+  marker.setLatLng([position.coords.latitude, position.coords.longitude])
+}
+
+function putPoint(uuid, position) {
+  if (markers[uuid])
+    updatePoint(uuid, position)
+  else
+    addPoint(uuid, position)
+}
+
+//retrieve current location from firebase
+marker.on('child_added', function(childSnapshot) {
+  var uuid = childSnapshot.key()
+  var position = childSnapshot.val()
+
+  addPoint(uuid, position)
 })
 
-ref.on('child_removed', function(oldChildSnapshot) {
-  document.getElementById('report').innerHTML=""; 
+marker.on('child_changed', function(childSnapshot) {
+  var uuid = childSnapshot.key()
+  var position = childSnapshot.val()
+
+  document.getElementById("report").innerHTML+="";
+  //putPoint(uuid, position)
 })
 
-ref.on('value', gotData);
+marker.on('child_removed', function(oldChildSnapshot) {
+  var uuid = oldChildSnapshot.key()
 
-function gotData(data){
-//open
-  var location = data.val();
-  var keys = Object.keys(location);
+  document.getElementById("report").innerHTML+="";
+  //removePoint(uuid)
+})
 
-  document.getElementById("report").innerHTML+= "<tr><th> Type Disaster<th> Information</tr>";
-  for(var i=0;i<keys.length;i++){
-     var k = keys[i];
-    var name = location[k].name;
-    var age = location[k].age;
-    var casualties = location[k].casualties;
-    var conNumber = location[k].contactNumber;
-    var nMedic = location[k].needofmedication;
-    var urgentN = location[k].urgentNeed;
-    var latitude = location[k].latitude;
-    var longitude = location[k].longitude;
-    var typeDisaster = location[k].typeDisaster;
-    var sevLevel = location[k].severityLevel;
-    var date = location[k].date;
-    var role = location[k].role;
-     document.getElementById("report").innerHTML+= "<tr><td><img  src=img/"+ typeDisaster + ".png height=42 width=42/></td><td><b>"+typeDisaster +"</b><br><b>Name: </b>"+ name + "<br><b>Age: </b>" + age +"<br><b>Contact Number: </b>" + conNumber +"<br><b>Casualties: </b>" + casualties + "<br><b>Need of medication: </b>" + nMedic + "<br><b>Urgent Need: </b>" + urgentN + "<br><b>Severity Level: </b>" + sevLevel + "<br><b>Date: </b>" + date + "<br><button class='view' lat="+ latitude + " lon="+ longitude + " value="+ k + ">View</button><br></tr>";
-}
-//closed
-}
-$(document).on('click', '.button hide', function() {
-    var clicked = $(this).val();
-    alert(clicked);
-});
+// Remove old markers
+setInterval(function() {
+  marker.limitToFirst(100).once('value', function(snap) {
+    var now = Math.floor(Date.now() / 1000)
+    //console.log(now);
+    snap.forEach(function(childSnapshot) {
+      var uuid = childSnapshot.key()
+
+       if (uuid === myUuid) return
+
+      if (childSnapshot.val().timestamp < now - 100 ) {
+        document.getElementById("report").innerHTML+="";
+      }
+    })
+  })
+}, 5000);
+
+//--------------------------------------Track User--------------------------------------//
 
 $(document).on('click', '.view', function() {
     
@@ -112,96 +159,181 @@ $(document).on('click', '.view', function() {
     }).setView([lat, lon], 100)
     L.control.locate().addTo(map);
 
-//add stored location marker to mapbox - edited
+    //function messaging
+$(document).on('click', '.message', function() {
+    var clicked = $(this).val();
+    //var no = $(this).attr('no');
 
-var database = firebase.database();
-var ref = database.ref('location');
-ref.on('value', gotData);
-var mark = {};
-
-
-function gotData(data){
-  //open
-
-  var location = data.val();
-  
-  var keys = Object.keys(location);
-  
-    // The clusterGroup gets each marker in the group added to it
-    // once loaded, and then is added to the map
-  var mark = new L.MarkerClusterGroup();
-
-  for(var i=0;i<keys.length;i++){
-    var k = keys[i];
-    var user = location[k].user;
-    //console.log(user);
-    var name = location[k].name;
-    var age = location[k].age;
-    var casualties = location[k].casualties;
-    var conNumber = location[k].contactNumber;
-    var nMedic = location[k].needofmedication;
-    var urgentN = location[k].urgentNeed;
-    var latitude = location[k].latitude;
-    var longitude = location[k].longitude;
-    var typeDisaster = location[k].typeDisaster;
-    var sevLevel = location[k].severityLevel;
-    var date = location[k].date;
-
-    
-    var geoJson = {
-    type: 'FeatureCollection',
-    features:[{
-    "type": "Feature",
-    "geometry": {
-      "type": "Point",
-      "coordinates": [longitude, latitude]
-    },  
-    "properties": {
-      "title": typeDisaster,
-      "description": 
-      '#' + (i+1) + '<br>' +
-      '<b>Name: </b>' + name + '<br>' +
-      '<b>Age: </b>' + age + '<br>' +
-      '<b>Contact: </b>' + conNumber + '<br>' +
-      '<b>Casualties: </b>' + casualties + '<br>' +
-      '<b>Need of Medication: </b>' + nMedic + '<br>' +
-      '<b>Urgent Need: </b>' + urgentN + '<br>' +
-      '<b>Severity Level: </b>' + sevLevel + '<br>' +
-      '<b>Date: </b>' + date + '<br>' /*+
-      '<button class="like" value='+ k + '>Like</button>' +
-      '<button class="dislike" value='+ k + '>Dislike</button>' */
-      ,
-      image: "img/" + typeDisaster + ".png",
-      "icon": {
-              "iconUrl":"img/" + typeDisaster + ".png",
-              "iconSize": [25, 25], // size of the icon
-              "iconAnchor": [25, 25], // point of the icon which will correspond to marker's location
-              "popupAnchor": [0, -25], // point from which the popup should open relative to the iconAnchor
-              "className": "dot"
-          }
+    message = document.getElementById("mes").value;
+    if(message==""){
+      alert('please enter message!');
+      return false;
     }
-  }]
-};
+    else{
+        var refMessage = database.ref('location/' + clicked + '/message');
 
-var myLayer = L.mapbox.featureLayer();
-myLayer.on('layeradd', function(e) {
-    var marker = e.layer,
-        feature = marker.feature;
+        refMessage.push({
+          message: message,
+          visit: 0
+        });
+        alert('Message has been sent to this victim!');
+    }
 
-    marker.setIcon(L.icon(feature.properties.icon));
-     var content = '<p><strong>' + feature.properties.title + '</strong><br>'+feature.properties.description +'</p><img src="' + feature.properties.image + '" height=50 width=60>';
-  marker.bindPopup(content);
+});
+//function messaging
+
+var marker = new Firebase('https://real-time-tracking-bcce8.firebaseio.com/maps/');
+var markers = {};
+
+firebase.auth().onAuthStateChanged(firebaseUser=>{
+      if(firebaseUser){
+         navigator.geolocation.watchPosition(function(position) {
+          enableHighAccuracy: true,
+            marker.child(myUuid).set({
+              coords: {
+                role: 1,
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+              },
+              timestamp: Math.floor(Date.now() / 1000)
+            })
+          }
+          );
+      }
+      else{
+         navigator.geolocation.watchPosition(function(position) {
+          enableHighAccuracy: true,
+            marker.child(myUuid).set({
+              coords: {
+                role:0,
+                name: displayName,
+                age: displayAge,
+                contact: displayContact,
+                urgentneed: displayuNeed,
+                casualties: displayCas,
+                medication: displaynMedic,
+                typeofdisaster: displayType,
+                date: displayDate,
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+              },
+              timestamp: Math.floor(Date.now() / 1000)
+            })
+          }
+          );
+      }
+  });
+
+function addPoint(uuid, position) {
+  var myIcon = L.icon({
+  iconUrl: (uuid == myUuid ? 'img/marker1.png' : position.coords.role == 1 ? 'img/rescue.png': 'img/marker.png'),
+  iconSize: [25, 25], 
+  iconAnchor: [10, 10],
 });
 
-myLayer.setGeoJSON(geoJson);
+  var marker = L.marker([position.coords.latitude, position.coords.longitude], {
+    icon: myIcon
+  })
+  .bindPopup(uuid == myUuid ? "You are here" : position.coords.role == 1 ? 'Rescue Operation' : 
 
+    '<b>Type of disaster: </b>'+ position.coords.typeofdisaster + ' <br>' +
+    '<b>Name:  </b>' + position.coords.name + ' <br>' + 
+    '<b>Age:  </b>' + position.coords.age + '<br>' +
+    '<b>Contact Number: </b>' + position.coords.contact + '<br>' +
+    '<b>Is there any casualties? : </b>' + position.coords.casualties + '<br>' +
+    '<b>Need of Medication: </b>' + position.coords.medication + '<br>' +
+    '<b>Urgent Need: </b>' + position.coords.urgentneed + '<br>' +
+    '<b>Date: </b>' + position.coords.date + '<br>')
+  .addTo(map)
 
-mark.addLayer(myLayer);
-map.addLayer(mark);
-
-//closed
+  markers[uuid] = marker;
+  map.fitBounds(Object.keys(markers).map(function(uuid) {
+    return markers[uuid].getLatLng()
+  }))
 }
+
+function removePoint(uuid) {
+  map.removeLayer(markers[uuid])
 }
+
+function updatePoint(uuid, position) {
+  var marker = markers[uuid]
+  marker.setLatLng([position.coords.latitude, position.coords.longitude])
+}
+
+function putPoint(uuid, position) {
+  if (markers[uuid])
+    updatePoint(uuid, position)
+  else
+    addPoint(uuid, position)
+}
+
+//retrieve current location from firebase
+marker.on('child_added', function(childSnapshot) {
+  var uuid = childSnapshot.key()
+  var position = childSnapshot.val()
+
+  addPoint(uuid, position)
+})
+
+marker.on('child_changed', function(childSnapshot) {
+  var uuid = childSnapshot.key()
+  var position = childSnapshot.val()
+
+  putPoint(uuid, position)
+})
+
+marker.on('child_removed', function(oldChildSnapshot) {
+  var uuid = oldChildSnapshot.key()
+
+  removePoint(uuid)
+})
+
+$(document).on('click', '.messageVictim', function() {
+    var clicked = $(this).val();
+    //var no = $(this).attr('no');
+
+    message = document.getElementById("mes").value;
+   /* alert(message);
+    alert(clicked);
+    alert(myUuid);*/
+    if(message==""){
+      alert('Please enter message!');
+      document.getElementById("mes").focus();
+      return false;
+    }
+    else{
+        var refMessage = database.ref('location/' + clicked + '/message');
+
+        refMessage.push({
+          message: message,
+          role: 1,
+          visit: 0
+        });
+        alert('Message has been sent to this victim!');
+        document.getElementById("mes").value="";
+    }
+
+});
+
+
+// Remove old markers
+setInterval(function() {
+  marker.limitToFirst(100).once('value', function(snap) {
+    var now = Math.floor(Date.now() / 1000)
+    //console.log(now);
+    snap.forEach(function(childSnapshot) {
+      var uuid = childSnapshot.key()
+
+       if (uuid === myUuid) return
+
+      if (childSnapshot.val().timestamp < now - 100 ) {
+        marker.child(uuid).set(null)
+      }
+    })
+  })
+}, 5000);
+
 
 });
   </script>
