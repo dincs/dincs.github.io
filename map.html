@@ -65,10 +65,8 @@
   <form action="#" id="form" method="post" onsubmit="return false">
     <center>
   <img id="close" src="img/close.png" onclick ="div_hide()">
-  <table border=1><tr><td>
+  <table border=1 bordercolor="red"><tr><td>
   <h4 align=center>Select Image that describe your situation</h4>
-
-
   <center>
 <label>
   <input type="radio" name="disaster" id="disaster0" value="flood"/>
@@ -94,13 +92,11 @@
 Water <input type="checkbox" name="urgentNeed" id="urgentNeed0" value="Water"/>
 Food <input type="checkbox" name="urgentNeed" id="urgentNeed1" value="Food"/>
 
-<br><b>
-Is there any casualties ?</b><br>
-Yes <input type="radio" name="casualties" id="casualties0" value="Yes"/>
-No <input type="radio" name="casualties" id="casualties1" value="No"/>
+<br>
+<input type="text" name="cas" id="cas" placeholder="How many people injured?">
 
 <br><b>
-Do you need medication ?</b><br>
+Do you need medical assistant?</b><br>
 Yes <input type="radio" name="needMedic" id="needMedic0" value="Yes"/>
 No <input type="radio" name="needMedic" id="needMedic1" value="No"/>
 

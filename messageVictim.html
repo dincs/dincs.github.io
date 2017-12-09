@@ -71,11 +71,20 @@ function addPoint(uuid, position) {
     var role = position.coords.role;
 
     if(role==1){
-      document.getElementById("report").innerHTML+= "";
+      if(uuid==myUuid){
+          document.getElementById("report").innerHTML+= "<tr><td><center><img  src='img/marker1.png' height=35 width=35/><br>You</center></td><td>Rescue Operation<br><button class='view' lat="+ latitude + " lon="+ longitude + " value="+ uuid + ">Track</button><br></tr>";
+      }
+      else
+      {document.getElementById("report").innerHTML+= "<tr><td><center><img  src='img/rescue.png' height=35 width=35/></center></td><td>Rescue Operation<br><button class='view' lat="+ latitude + " lon="+ longitude + " value="+ uuid + ">Track</button><br></tr>";}
     }
     else{
-      document.getElementById("report").innerHTML+= "<tr><td><img  src=img/marker.png height=42 width=42/></td><td><b>"+typeDisaster +"</b><br><b>Name: </b>"+ name + "<br><b>Age: </b>" + age +"<br><b>Contact Number: </b>" + contact +"<br><b>Casualties: </b>" + casualties + "<br><b>Need of medication: </b>" + medication + "<br><b>Urgent Need: </b>" + urgentneed + "<br><b>Date: </b>" + date + "<br><button class='view' lat="+ latitude + " lon="+ longitude + " value="+ uuid + ">Message</tr>";
-      i++;
+      if(uuid==myUuid){
+          document.getElementById("report").innerHTML+= "<tr><td><center><img  src=img/marker1.png height=35 width=35/><br>You</center></td><td><b>Type of Disaster: </b>"+typeDisaster +"</b><br><b>Name: </b>"+ name + "<br><b>Age: </b>" + age +"<br><b>Contact Number: </b>" + contact +"<br><b>How many people injured? : </b>" + casualties + "<br><b>Need of medication: </b>" + medication + "<br><b>Urgent Need: </b>" + urgentneed + "<br><b>Date: </b>" + date + "<br><button class='view' lat="+ latitude + " lon="+ longitude + " value="+ uuid + ">Track</button><br></tr>";
+      }
+      else{
+        document.getElementById("report").innerHTML+= "<tr><td><center><img  src=img/marker.png height=35 width=35/></center></td><td><b>Type of Disaster: </b>"+typeDisaster +"<br><b>Name: </b>"+ name + "<br><b>Age: </b>" + age +"<br><b>Contact Number: </b>" + contact +"<br><b>How many people injured? : </b>" + casualties + "<br><b>Need of medication: </b>" + medication + "<br><b>Urgent Need: </b>" + urgentneed + "<br><b>Date: </b>" + date + "<br><button class='view' lat="+ latitude + " lon="+ longitude + " value="+ uuid + ">Message</button><br></tr>";
+      }
+      
     }
     
 }

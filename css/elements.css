@@ -22,9 +22,9 @@ cursor:pointer
 }
 div#popupContact {
 position:absolute;
-right:10;
+right:17;
 top:2%;
-margin-left:-202px;
+margin-left:-150px;
 font-family:'Raleway',sans-serif
 }
 form {

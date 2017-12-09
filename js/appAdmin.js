@@ -153,7 +153,7 @@ function addPoint(uuid, position) {
     '<b>Name:  </b>' + position.coords.name + ' <br>' + 
     '<b>Age:  </b>' + position.coords.age + '<br>' +
     '<b>Contact Number: </b>' + position.coords.contact + '<br>' +
-    '<b>Is there any casualties? : </b>' + position.coords.casualties + '<br>' +
+    '<b>How many people injured? : </b>' + position.coords.casualties + '<br>' +
     '<b>Need of Medication: </b>' + position.coords.medication + '<br>' +
     '<b>Urgent Need: </b>' + position.coords.urgentneed + '<br>' +
     '<b>Date: </b>' + position.coords.date + '<br>' +
