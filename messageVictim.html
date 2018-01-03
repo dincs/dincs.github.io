@@ -287,13 +287,15 @@ function addPoint(uuid, position) {
     '<b>Name:  </b>' + position.coords.name + ' <br>' + 
     '<b>Age:  </b>' + position.coords.age + '<br>' +
     '<b>Contact Number: </b>' + position.coords.contact + '<br>' +
-    '<b>Is there any casualties? : </b>' + position.coords.casualties + '<br>' +
+    '<b>How many people injured? : </b>' + position.coords.casualties + '<br>' +
     '<b>Need of Medication: </b>' + position.coords.medication + '<br>' +
     '<b>Urgent Need: </b>' + position.coords.urgentneed + '<br>' +
     '<b>Date: </b>' + position.coords.date + '<br>' +
 
     '<input type="textarea" id="mes" name="mes" size=35% width=35%>' +
-    '<button id="messageVictim" class="messageVictim" value='+ uuid + '>Message</button>')
+    '<button id="messageVictim" class="messageVictim" value='+ uuid + '>Message</button>' + 
+    '<button id="delMessage" class="delMessage" value='+ uuid + '>Delete Message</button>'
+    )
   .addTo(map)
 
   markers[uuid] = marker;
@@ -341,12 +343,8 @@ marker.on('child_removed', function(oldChildSnapshot) {
 
 $(document).on('click', '.messageVictim', function() {
     var clicked = $(this).val();
-    //var no = $(this).attr('no');
 
     message = document.getElementById("mes").value;
-   /* alert(message);
-    alert(clicked);
-    alert(myUuid);*/
     if(message==""){
       alert('Please enter message!');
       document.getElementById("mes").focus();
@@ -362,6 +360,24 @@ $(document).on('click', '.messageVictim', function() {
         });
         alert('Message has been sent to this victim!');
         document.getElementById("mes").value="";
+    }
+
+});
+
+$(document).on('click', '.delMessage', function() {
+    var clicked = $(this).val();
+
+    var con = confirm("Are you sure to delete all message sent to this victim ?");
+    if(con==false){
+      return false;
+    }
+    else{
+
+        var refMessage = database.ref('location/' + clicked + '/message');
+
+        refMessage.remove();
+
+        alert('All message has been deleted!');
     }
 
 });

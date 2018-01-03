@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<style>
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+div {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+</style>
+<body>
+
+<h3>Update Profile</h3>
+
+<div>
+  <form action="" method="post">
+  	
+    <table id="display">
+    </table>
+
+  
+    <input type="submit" value="Submit" onClick="updateProfile()">
+  </form>
+</div>
+</body>
+<script>
+			var displayName = localStorage.getItem('name');
+			var displayAge = localStorage.getItem('age');
+			var displayContact = localStorage.getItem('conNumber');
+
+			if (!displayName) {
+			  displayName = "Other user";
+			  localStorage.setItem('displayName', displayName);
+			}
+
+			if (!displayAge) {
+			  displayAge = "None";
+			  localStorage.setItem('displayAge', displayAge);
+			}
+
+			if (!displayContact) {
+			  displayContact = "None";
+			  localStorage.setItem('displayContact', displayContact);
+			}
+
+			document.getElementById("display").innerHTML+=" <label for='name'>Name</label>";
+			document.getElementById("display").innerHTML+="<input type='text' id='name' name='name' value='"+displayName+"'>";
+			document.getElementById("display").innerHTML+=" <label for='age'>Age</label>";
+  			document.getElementById("display").innerHTML+="<input type='text' id='age' name='age' value='"+displayAge+"'>";
+  			document.getElementById("display").innerHTML+=" <label for='con'>Contact Number</label>";
+  			document.getElementById("display").innerHTML+="<input type='text' id='con' name='con' value='"+displayContact+"'>";
+
+  			function updateProfile(){
+  				var name = document.getElementById("name").value;
+  				var age = document.getElementById("age").value;
+  				var con = document.getElementById("con").value;
+
+  				if (name=="") {
+				  alert("ERROR! Please enter name !");
+				  document.getElementById("name").focus();
+				  return false;
+				}
+				else if (age=="") {
+				  alert("ERROR! Please enter age  !");
+				  document.getElementById("age").focus();
+				  return false;
+				}
+				else if (isNaN(age)) {
+				  alert("ERROR! Please enter number only!");
+				  document.getElementById("age").focus();
+				  document.getElementById("age").value="";
+				  return false;
+				}
+				else if (con=="") {
+				  alert("ERROR! Please enter contact number !");
+				  document.getElementById("con").focus();
+				  return false;
+				}
+				else if (isNaN(con)) {
+				  alert("ERROR! Please enter number only!");
+				  document.getElementById("con").focus();
+				  document.getElementById("con").value="";
+				  return false;
+				}
+				else{
+					localStorage.setItem('name', name);
+					localStorage.setItem('age', age);
+					localStorage.setItem('conNumber', con);
+					alert("Profile successfully updated");
+				}
+  			}
+    </script>
+</html>

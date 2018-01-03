@@ -128,15 +128,9 @@ function addPoint(uuid, position) {
   })
   .bindPopup(uuid == myUuid ? "You are here " : 
     position.coords.role == 1 ? 'Rescue Operation':
-
-    '<b>Type of disaster: </b>'+ position.coords.typeofdisaster + ' <br>' +
     '<b>Name:  </b>' + position.coords.name + ' <br>' + 
     '<b>Age:  </b>' + position.coords.age + '<br>' +
-    '<b>Contact Number: </b>' + position.coords.contact + '<br>' +
-    '<b>How many people injured? : </b>' + position.coords.casualties + '<br>' +
-    '<b>Need of Medication: </b>' + position.coords.medication + '<br>' +
-    '<b>Urgent Need: </b>' + position.coords.urgentneed + '<br>' +
-    '<b>Date: </b>' + position.coords.date + '<br>' 
+    '<b>Contact Number: </b>' + position.coords.contact + '<br>'
 
    )
   .addTo(map)

@@ -14,6 +14,7 @@ var displayCas = localStorage.getItem('cas');
 var displaynMedic = localStorage.getItem('nMedic');
 var displayType = localStorage.getItem('type');
 var displayDate = localStorage.getItem('utcDate');
+var severityLevel = localStorage.getItem('severityLevel');
 
 if (!myUuid) {
   myUuid = guid();
@@ -23,6 +24,11 @@ if (!myUuid) {
 if (!displayName) {
   displayName = "Other user";
   localStorage.setItem('displayName', displayName);
+}
+
+if (!severityLevel) {
+  severityLevel = "None";
+  localStorage.setItem('severityLevel', severityLevel);
 }
 
 if (!displayAge) {
@@ -129,6 +135,7 @@ firebase.auth().onAuthStateChanged(firebaseUser=>{
                 date: displayDate,
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
+                severityLevel: severityLevel
               },
               timestamp: Math.floor(Date.now() / 1000)
             })
@@ -157,9 +164,18 @@ function addPoint(uuid, position) {
     '<b>Need of Medication: </b>' + position.coords.medication + '<br>' +
     '<b>Urgent Need: </b>' + position.coords.urgentneed + '<br>' +
     '<b>Date: </b>' + position.coords.date + '<br>' +
+    '<b>Severity Level: </b>' + severityLevel + '<br>' +
 
     '<input type="textarea" id="mes" name="mes" size=35% width=35%>' +
-    '<button id="messageVictim" class="messageVictim" value='+ uuid + '>Message</button>')
+    '<button id="messageVictim" class="messageVictim" value='+ uuid + '>Message</button>'+ 
+    '<button id="delMessage" class="delMessage" value='+ uuid + '>Delete Message</button><br><br>' + 
+    '<select id="level">' +
+    '<option value="">Select Severity Level' +
+    '<option value="Level 1">Level 1' +
+    '<option value="Level 2">Level 2' +
+    '<option value="Level 3">Level 3' +
+    '</select>' +
+    '<button id="updateLevel" class="updateLevel" value='+ uuid + '>Update</button>')
   .addTo(map)
 
   markers[uuid] = marker;
@@ -231,6 +247,44 @@ $(document).on('click', '.messageVictim', function() {
     }
 
 });
+
+$(document).on('click', '.delMessage', function() {
+    var clicked = $(this).val();
+
+    var con = confirm("Are you sure to delete all message sent to this victim ?");
+    if(con==false){
+      return false;
+    }
+    else{
+
+        var refMessage = database.ref('location/' + clicked + '/message');
+
+        refMessage.remove();
+
+        alert('All message has been deleted!');
+    }
+
+});
+
+$(document).on('click', '.updateLevel', function() {
+    var clicked = $(this).val();
+    //var no = $(this).attr('no');
+
+    level = document.getElementById("level").value;
+   
+    var con = confirm("Are you sure to update severity level?");
+    if(con==false){
+      return false;
+    }
+    else{
+        database.ref('location/' + clicked).update({ severityLevel: level });
+
+        alert('Severity has been updated!');
+    }
+
+});
+
+
 
 
 // Remove old markers

@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <script>
-
-        //-----------------------------handle diagnosis-------------------------------//
-        //-----------------------------handle diagnosis------------------------------//
-      </script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,6 +17,32 @@
         <link rel="stylesheet" href="css/style3.css">
         <script src="js/login.js"></script>
         <script src="js/firebase.js"></script>
+        <script>
+            var myUuid = localStorage.getItem('myUuid');
+            var database = firebase.database();
+            var ref = database.ref('location/' + myUuid +'/');
+
+            ref.on('value',gotData);
+
+            function gotData(data){
+
+              var level = data.val();
+              var keys = Object.keys(level);
+
+              for(var i=0;i<keys.length;i++){
+              
+                var k = keys[i];
+                var l = level[k].severityLevel;
+                
+                if(l==undefined){
+                  console.log("No severity level");
+                }
+                else{
+                  localStorage.setItem('severityLevel', l);
+                }
+              }
+            }
+        </script>
         <style>
         .button2 {
         color: inherit;
@@ -130,6 +151,9 @@
                 
                     <li>
                         <a href="#" onclick="load_map()">View Map</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="load_profile()">View Profile</a>
                     </li>
                     <li>
                         <a href="#" onclick="load_report()">View User</a>
@@ -252,14 +276,14 @@
 
      document.getElementById("line").innerHTML='<object type="text/html" data="response.html" width="100%" height=500></object>';
 
-   
-     
-     //document.getElementsByTagName("a")[0].setAttribute("class", "democlass"); 
-
     }
 
     function load_map() {
          document.getElementById("line").innerHTML='<object type="text/html" data="map.html" width="100%" height=500></object>';
+    }
+
+    function load_profile() {
+         document.getElementById("line").innerHTML='<object type="text/html" data="profile.html" width="100%" height=500></object>';
     }
 
     function load_login(){
