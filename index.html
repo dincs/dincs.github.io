@@ -17,29 +17,6 @@
         <link rel="stylesheet" href="css/style3.css">
         <script src="js/login.js"></script>
         <script src="js/firebase.js"></script>
-        <script>
-            var myUuid = localStorage.getItem('myUuid');
-            var database = firebase.database();
-            var ref = database.ref('location/' + myUuid +'/');
-
-            ref.on('value',gotData);
-
-            function gotData(data){
-
-              var level = data.val();
-              var keys = Object.keys(level);
-
-              var l = level.severityLevel;
-              console.log(l);
-                if(l==undefined){
-                  console.log("No severity level");
-                }
-                else{
-                  localStorage.setItem('severityLevel', l);
-                }
-              
-            }
-        </script>
         <style>
         .button2 {
         color: inherit;
