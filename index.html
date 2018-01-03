@@ -29,18 +29,15 @@
               var level = data.val();
               var keys = Object.keys(level);
 
-              for(var i=0;i<keys.length;i++){
-              
-                var k = keys[i];
-                var l = level[k].severityLevel;
-                
+              var l = level.severityLevel;
+              console.log(l);
                 if(l==undefined){
                   console.log("No severity level");
                 }
                 else{
                   localStorage.setItem('severityLevel', l);
                 }
-              }
+              
             }
         </script>
         <style>
