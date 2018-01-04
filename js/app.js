@@ -71,47 +71,17 @@ var map = L.mapbox.map('map', 'mapbox.streets', {
 
 L.control.locate().addTo(map);
 
-var marker = new Firebase('https://real-time-tracking-bcce8.firebaseio.com/maps/');
-var markers = {};
+var markersRef = new Firebase('https://locatme.firebaseio.com/maps/' + mapId);
 
-firebase.auth().onAuthStateChanged(firebaseUser=>{
-      if(firebaseUser){
          navigator.geolocation.watchPosition(function(position) {
-          enableHighAccuracy: true,
-            marker.child(myUuid).set({
+            markersRef.child(myUuid).set({
               coords: {
-                role: 1,
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
               },
               timestamp: Math.floor(Date.now() / 1000)
             })
-          }
-          );
-      }
-      else{
-         navigator.geolocation.watchPosition(function(position) {
-          enableHighAccuracy: true,
-            marker.child(myUuid).set({
-              coords: {
-                role:0,
-                name: displayName,
-                age: displayAge,
-                contact: displayContact,
-                urgentneed: displayuNeed,
-                casualties: displayCas,
-                medication: displaynMedic,
-                typeofdisaster: displayType,
-                date: displayDate,
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-              },
-              timestamp: Math.floor(Date.now() / 1000)
-            })
-          }
-          );
-      }
-  });
+          });
 
 function addPoint(uuid, position) {
   var myIcon = L.icon({
